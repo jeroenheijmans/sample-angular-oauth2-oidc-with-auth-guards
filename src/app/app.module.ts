@@ -1,6 +1,11 @@
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
+import { OAuthStorage, ValidationHandler, JwksValidationHandler, AuthConfig, OAuthModuleConfig, OAuthModule } from 'angular-oauth2-oidc';
+
+import { authConfig } from './auth-config';
+import { authModuleConfig } from './app-module-config';
 
 import { AppComponent } from './app.component';
 import { AdminComponent } from './admin.component';
@@ -20,6 +25,8 @@ import { PublicComponent } from './public.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    OAuthModule.forRoot(authModuleConfig),
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
@@ -28,7 +35,12 @@ import { PublicComponent } from './public.component';
       { path: '**', component: FallbackComponent },
     ]),
   ],
-  providers: [],
+  providers: [
+    { provide: AuthConfig, useValue: authConfig },
+    { provide: OAuthModuleConfig, useValue: authModuleConfig },
+    { provide: ValidationHandler, useClass: JwksValidationHandler },
+    { provide: OAuthStorage, useValue: localStorage },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

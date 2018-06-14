@@ -20,7 +20,8 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/silent-refresh.html"
             ],
             "styles": [
               "src/styles.css"
@@ -77,7 +78,8 @@
             "scripts": [],
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/silent-refresh.html"
             ]
           }
         },
