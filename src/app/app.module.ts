@@ -5,6 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { OAuthStorage, ValidationHandler, JwksValidationHandler, AuthConfig, OAuthModuleConfig, OAuthModule } from 'angular-oauth2-oidc';
 
 import { authConfig } from './auth-config';
+import { AuthGuard } from './auth-guard.service';
 import { authModuleConfig } from './app-module-config';
 
 import { AppComponent } from './app.component';
@@ -13,6 +14,7 @@ import { FallbackComponent } from './fallback.component';
 import { HomeComponent } from './home.component';
 import { MenuComponent } from './menu.component';
 import { PublicComponent } from './public.component';
+import { ShouldLoginComponent } from './should-login.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { PublicComponent } from './public.component';
     HomeComponent,
     FallbackComponent,
     PublicComponent,
+    ShouldLoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,8 +33,9 @@ import { PublicComponent } from './public.component';
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
-      { path: 'admin', component: AdminComponent },
+      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
       { path: 'public', component: PublicComponent },
+      { path: 'should-login', component: ShouldLoginComponent },
       { path: '**', component: FallbackComponent },
     ]),
   ],
@@ -40,6 +44,8 @@ import { PublicComponent } from './public.component';
     { provide: OAuthModuleConfig, useValue: authModuleConfig },
     { provide: ValidationHandler, useClass: JwksValidationHandler },
     { provide: OAuthStorage, useValue: localStorage },
+
+    AuthGuard,
   ],
   bootstrap: [AppComponent]
 })
