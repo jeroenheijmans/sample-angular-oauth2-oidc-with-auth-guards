@@ -17,7 +17,7 @@ import { OAuthService, AuthConfig, OAuthErrorEvent } from 'angular-oauth2-oidc';
         <button class="btn btn-primary mr-4" (click)='logoff()'>logout</button>
         <button class="btn btn-warning mr-4" (click)='refresh()'>force silent refresh</button>
         <button class="btn btn-secondary mr-4" (click)='reload()'>force reload page</button>
-        <button class="btn btn-danger mr-1" (click)='reset()'>reset everything</button>
+        <button class="btn btn-danger mr-1" (click)='reset()'>reset everything locally</button>
       </p>
       <hr>
       <strong>AccessToken</strong><pre>{{accessToken}}</pre>
@@ -45,7 +45,36 @@ export class AppComponent {
       .pipe(filter(e => e.type === 'token_received'))
       .subscribe(e => this.authService.loadUserProfile());
 
-    this.authService.loadDiscoveryDocumentAndTryLogin();
+    // 0. LOAD CONFIG:
+    // First we have to check to see how the IdServer is
+    // currently configured:
+    this.authService.loadDiscoveryDocument()
+
+      // 1. HASH LOGIN:
+      // Try to log in via hash fragment after redirect back
+      // from IdServer from initImplicitFlow:
+      .then(() => this.authService.tryLogin())
+
+      .then(() => {
+        if (!this.authService.hasValidAccessToken()) {
+
+          // 2. SILENT LOGIN:
+          // Try to log in via silent refresh because the IdServer
+          // might have a cookie to remember the user, so we can
+          // prevent doing a redirect:
+          this.authService.silentRefresh()
+            .catch(error => {
+              if (error && error.reason && error.reason.error === 'login_required') {
+
+                // 3. ASK FOR LOGIN:
+                // At this point we know for sure that we have to ask the
+                // user to log in, so we redirect them to the IdServer to
+                // enter credentials:
+                this.authService.initImplicitFlow();
+              }
+            });
+        }
+      });
   }
 
   public login() { this.authService.initImplicitFlow(); }
