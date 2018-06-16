@@ -64,7 +64,17 @@ export class AppComponent {
           // prevent doing a redirect:
           this.authService.silentRefresh()
             .catch(error => {
-              if (error && error.reason && error.reason.error === 'login_required') {
+              // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
+              // Only the ones where it's reasonably sure that sending the
+              // user to the IdServer will help.
+              const errorResponsesRequiringUserInteraction = [
+                'interaction_required',
+                'login_required',
+                'account_selection_required',
+                'consent_required',
+              ];
+
+              if (error && error.reason && errorResponsesRequiringUserInteraction.indexOf(error.reason.error) >= 0) {
 
                 // 3. ASK FOR LOGIN:
                 // At this point we know for sure that we have to ask the
