@@ -63,7 +63,7 @@ export class AppComponent {
           // might have a cookie to remember the user, so we can
           // prevent doing a redirect:
           this.authService.silentRefresh()
-            .catch(error => {
+            .catch(result => {
               // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
               // Only the ones where it's reasonably sure that sending the
               // user to the IdServer will help.
@@ -74,7 +74,7 @@ export class AppComponent {
                 'consent_required',
               ];
 
-              if (error && error.reason && errorResponsesRequiringUserInteraction.indexOf(error.reason.error) >= 0) {
+              if (result && result.reason && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
 
                 // 3. ASK FOR LOGIN:
                 // At this point we know for sure that we have to ask the
