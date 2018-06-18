@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { OAuthStorage, ValidationHandler, JwksValidationHandler, AuthConfig, OAuthModuleConfig, OAuthModule } from 'angular-oauth2-oidc';
 
+import { ApiService } from './api.service';
 import { authConfig } from './auth-config';
 import { AuthGuard } from './auth-guard.service';
 import { authModuleConfig } from './app-module-config';
@@ -46,6 +47,7 @@ import { ShouldLoginComponent } from './should-login.component';
     { provide: OAuthStorage, useValue: localStorage },
 
     AuthGuard,
+    ApiService,
   ],
   bootstrap: [AppComponent]
 })

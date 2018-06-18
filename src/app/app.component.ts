@@ -90,7 +90,7 @@ export class AppComponent {
   public login() { this.authService.initImplicitFlow(); }
   public logoff() { this.authService.logOut(); }
   public refresh() { this.authService.silentRefresh(); }
-  public reload() { window.location.href = window.location.href; }
+  public reload() { window.location.href = window.location.href.split('#')[0]; }
 
   public reset() {
     localStorage.clear();
