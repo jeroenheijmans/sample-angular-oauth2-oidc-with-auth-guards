@@ -57,37 +57,45 @@ export class AppComponent {
       // from IdServer from initImplicitFlow:
       .then(() => this.authService.tryLogin())
 
-      .then(() => {
-        if (!this.authService.hasValidAccessToken()) {
-
-          // 2. SILENT LOGIN:
-          // Try to log in via silent refresh because the IdServer
-          // might have a cookie to remember the user, so we can
-          // prevent doing a redirect:
-          this.authService.silentRefresh()
-            .catch(result => {
-              // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
-              // Only the ones where it's reasonably sure that sending the
-              // user to the IdServer will help.
-              const errorResponsesRequiringUserInteraction = [
-                'interaction_required',
-                'login_required',
-                'account_selection_required',
-                'consent_required',
-              ];
-
-              if (result
-                && result.reason
-                && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
-
-                // 3. ASK FOR LOGIN:
-                // At this point we know for sure that we have to ask the
-                // user to log in, so we redirect them to the IdServer to
-                // enter credentials:
-                this.authService.initImplicitFlow();
-              }
-            });
+      .then(tryLoginResult => {
+        if (this.authService.hasValidAccessToken()) {
+          return tryLoginResult;
         }
+
+        // 2. SILENT LOGIN:
+        // Try to log in via silent refresh because the IdServer
+        // might have a cookie to remember the user, so we can
+        // prevent doing a redirect:
+        return this.authService.silentRefresh()
+          .catch(result => {
+            // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
+            // Only the ones where it's reasonably sure that sending the
+            // user to the IdServer will help.
+            const errorResponsesRequiringUserInteraction = [
+              'interaction_required',
+              'login_required',
+              'account_selection_required',
+              'consent_required',
+            ];
+
+            if (result
+              && result.reason
+              && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
+
+              // 3. ASK FOR LOGIN:
+              // At this point we know for sure that we have to ask the
+              // user to log in, so we redirect them to the IdServer to
+              // enter credentials:
+              this.authService.initImplicitFlow();
+
+              // Just in case initImplicitFlow ever turns out to be(come) async.
+              return Promise.resolve();
+            }
+
+            // We can't handle the truth, just pass on the problem to the
+            // next handler.
+            return Promise.reject(result);
+          });
       });
   }
 
