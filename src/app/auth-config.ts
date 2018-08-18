@@ -7,5 +7,6 @@ export const authConfig: AuthConfig = {
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
   scope: 'openid profile email',
   silentRefreshTimeout: 5000, // For faster testing
+  timeoutFactor: 0.25, // For faster testing
   showDebugInformation: true, // Also requires enabling "Verbose" level in devtools
 };

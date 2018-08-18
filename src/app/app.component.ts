@@ -45,6 +45,8 @@ export class AppComponent {
       .pipe(filter(e => e.type === 'token_received'))
       .subscribe(e => this.authService.loadUserProfile());
 
+    this.authService.setupAutomaticSilentRefresh();
+
     // 0. LOAD CONFIG:
     // First we have to check to see how the IdServer is
     // currently configured:
