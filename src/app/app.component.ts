@@ -76,7 +76,9 @@ export class AppComponent {
                 'consent_required',
               ];
 
-              if (result && result.reason && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
+              if (result
+                && result.reason
+                && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
 
                 // 3. ASK FOR LOGIN:
                 // At this point we know for sure that we have to ask the
