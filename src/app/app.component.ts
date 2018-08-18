@@ -32,17 +32,17 @@ export class AppComponent {
     this.authService.kickOffLoginProcess();
   }
 
-  public login() { this.authService.login(); }
-  public logoff() { this.authService.logoff(); }
-  public refresh() { this.authService.refresh(); }
-  public reload() { window.location.reload(); }
+  login() { this.authService.login(); }
+  logoff() { this.authService.logoff(); }
+  refresh() { this.authService.refresh(); }
+  reload() { window.location.reload(); }
 
-  public reset() {
+  reset() {
     localStorage.clear();
     this.reload();
   }
 
-  public get accessToken() { return this.authService.accessToken; }
-  public get identityClaims() { return this.authService.identityClaims; }
-  public get idToken() { return this.authService.idToken; }
+  get accessToken() { return this.authService.accessToken; }
+  get identityClaims() { return this.authService.identityClaims; }
+  get idToken() { return this.authService.idToken; }
 }
