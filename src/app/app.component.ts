@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { filter } from 'rxjs/operators';
-import { OAuthService, OAuthErrorEvent } from 'angular-oauth2-oidc';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -28,77 +27,14 @@ import { OAuthService, OAuthErrorEvent } from 'angular-oauth2-oidc';
 })
 export class AppComponent {
   constructor (
-    private authService: OAuthService,
+    private authService: AuthService,
   ) {
-    this.authService.events.subscribe(event => {
-      if (event instanceof OAuthErrorEvent) {
-        console.error(event);
-      } else {
-        console.warn(event);
-      }
-    });
-
-    this.authService.events
-      .pipe(filter(e => e.type === 'token_received'))
-      .subscribe(e => this.authService.loadUserProfile());
-
-    this.authService.setupAutomaticSilentRefresh();
-
-    // 0. LOAD CONFIG:
-    // First we have to check to see how the IdServer is
-    // currently configured:
-    this.authService.loadDiscoveryDocument()
-
-      // 1. HASH LOGIN:
-      // Try to log in via hash fragment after redirect back
-      // from IdServer from initImplicitFlow:
-      .then(() => this.authService.tryLogin())
-
-      .then(tryLoginResult => {
-        if (this.authService.hasValidAccessToken()) {
-          return tryLoginResult;
-        }
-
-        // 2. SILENT LOGIN:
-        // Try to log in via silent refresh because the IdServer
-        // might have a cookie to remember the user, so we can
-        // prevent doing a redirect:
-        return this.authService.silentRefresh()
-          .catch(result => {
-            // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
-            // Only the ones where it's reasonably sure that sending the
-            // user to the IdServer will help.
-            const errorResponsesRequiringUserInteraction = [
-              'interaction_required',
-              'login_required',
-              'account_selection_required',
-              'consent_required',
-            ];
-
-            if (result
-              && result.reason
-              && errorResponsesRequiringUserInteraction.indexOf(result.reason.error) >= 0) {
-
-              // 3. ASK FOR LOGIN:
-              // At this point we know for sure that we have to ask the
-              // user to log in, so we redirect them to the IdServer to
-              // enter credentials:
-              this.authService.initImplicitFlow();
-
-              // Just in case initImplicitFlow ever turns out to be(come) async.
-              return Promise.resolve();
-            }
-
-            // We can't handle the truth, just pass on the problem to the
-            // next handler.
-            return Promise.reject(result);
-          });
-      });
+    this.authService.kickOffLoginProcess();
   }
 
-  public login() { this.authService.initImplicitFlow(); }
-  public logoff() { this.authService.logOut(); }
-  public refresh() { this.authService.silentRefresh(); }
+  public login() { this.authService.login(); }
+  public logoff() { this.authService.logoff(); }
+  public refresh() { this.authService.refresh(); }
   public reload() { window.location.reload(); }
 
   public reset() {
@@ -106,7 +42,7 @@ export class AppComponent {
     this.reload();
   }
 
-  public get accessToken() { return this.authService.getAccessToken(); }
-  public get identityClaims() { return this.authService.getIdentityClaims(); }
-  public get idToken() { return this.authService.getIdToken(); }
+  public get accessToken() { return this.authService.accessToken; }
+  public get identityClaims() { return this.authService.identityClaims; }
+  public get idToken() { return this.authService.idToken; }
 }

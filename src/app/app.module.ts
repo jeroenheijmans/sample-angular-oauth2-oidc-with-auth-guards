@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { OAuthStorage, ValidationHandler, JwksValidationHandler, AuthConfig, OAuthModuleConfig, OAuthModule } from 'angular-oauth2-oidc';
 
 import { ApiService } from './api.service';
@@ -16,6 +16,7 @@ import { HomeComponent } from './home.component';
 import { MenuComponent } from './menu.component';
 import { PublicComponent } from './public.component';
 import { ShouldLoginComponent } from './should-login.component';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ShouldLoginComponent } from './should-login.component';
     { provide: ValidationHandler, useClass: JwksValidationHandler },
     { provide: OAuthStorage, useValue: localStorage },
 
+    AuthService,
     AuthGuard,
     ApiService,
   ],
