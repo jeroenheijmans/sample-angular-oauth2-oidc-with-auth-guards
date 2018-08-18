@@ -4,9 +4,9 @@ import { OAuthService, AuthConfig, OAuthErrorEvent } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-root',
-  template: `<div class="container">
+  template: `<div class="container-fluid">
     <app-menu></app-menu>
-    <div class="container mt-2">
+    <div class="container-fluid mt-2">
       <h1>Welcome</h1>
       <p>This is part of the app.component. Below is the router outlet.</p>
       <hr><router-outlet></router-outlet>
