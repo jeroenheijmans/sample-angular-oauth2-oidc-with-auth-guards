@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { filter } from 'rxjs/operators';
-import { OAuthService, AuthConfig, OAuthErrorEvent } from 'angular-oauth2-oidc';
+import { OAuthService, OAuthErrorEvent } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +29,6 @@ import { OAuthService, AuthConfig, OAuthErrorEvent } from 'angular-oauth2-oidc';
 export class AppComponent {
   constructor (
     private authService: OAuthService,
-    private authConfig: AuthConfig,
   ) {
     this.authService.events.subscribe(event => {
       if (event instanceof OAuthErrorEvent) {
@@ -38,8 +37,6 @@ export class AppComponent {
         console.warn(event);
       }
     });
-
-    this.authService.configure(authConfig);
 
     this.authService.events
       .pipe(filter(e => e.type === 'token_received'))
