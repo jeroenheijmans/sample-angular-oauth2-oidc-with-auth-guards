@@ -28,6 +28,11 @@ export class AuthService {
     this.isDoneLoading$
   ).pipe(map(values => values.every(b => b)));
 
+  private navigateToLoginPage() {
+    // TODO: Remember current URL
+    this.router.navigateByUrl('/should-login');
+  }
+
   constructor (
     private oauthService: OAuthService,
     private router: Router,
@@ -38,6 +43,20 @@ export class AuthService {
         console.error(event);
       } else {
         console.warn(event);
+      }
+    });
+
+    window.addEventListener('storage', (event) => {
+      // The `key` is `null` if the event was caused by `.clear()`
+      if (event.key !== 'access_token' && event.key !== null) {
+        return;
+      }
+
+      console.warn('Noticed changes to access_token (possibly from another tab), updating isAuthenticated');
+      this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
+
+      if (!this.oauthService.hasValidAccessToken()) {
+        this.navigateToLoginPage();
       }
     });
 
@@ -52,7 +71,7 @@ export class AuthService {
 
     this.oauthService.events
       .pipe(filter(e => ['session_terminated', 'session_error'].includes(e.type)))
-      .subscribe(e => this.router.navigateByUrl('/should-login')); // TODO: Remember current URL
+      .subscribe(e => this.navigateToLoginPage());
 
     this.oauthService.setupAutomaticSilentRefresh();
   }
