@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -27,7 +28,10 @@ export class AuthService {
     this.isDoneLoading$
   ).pipe(map(values => values.every(b => b)));
 
-  constructor (private oauthService: OAuthService) {
+  constructor (
+    private oauthService: OAuthService,
+    private router: Router,
+  ) {
     // Useful for debugging:
     this.oauthService.events.subscribe(event => {
       if (event instanceof OAuthErrorEvent) {
@@ -45,6 +49,10 @@ export class AuthService {
     this.oauthService.events
       .pipe(filter(e => e.type === 'token_received'))
       .subscribe(e => this.oauthService.loadUserProfile());
+
+    this.oauthService.events
+      .pipe(filter(e => e.type === 'session_terminated'))
+      .subscribe(e => this.router.navigateByUrl('/should-login')); // TODO: Remember current URL
 
     this.oauthService.setupAutomaticSilentRefresh();
   }
@@ -122,4 +130,5 @@ export class AuthService {
   public get accessToken() { return this.oauthService.getAccessToken(); }
   public get identityClaims() { return this.oauthService.getIdentityClaims(); }
   public get idToken() { return this.oauthService.getIdToken(); }
+  public get logoutUrl() { return this.oauthService.logoutUrl; }
 }

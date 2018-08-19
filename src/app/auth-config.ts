@@ -8,5 +8,6 @@ export const authConfig: AuthConfig = {
   scope: 'openid profile email',
   silentRefreshTimeout: 5000, // For faster testing
   timeoutFactor: 0.25, // For faster testing
+  sessionChecksEnabled: true,
   showDebugInformation: true, // Also requires enabling "Verbose" level in devtools
 };
