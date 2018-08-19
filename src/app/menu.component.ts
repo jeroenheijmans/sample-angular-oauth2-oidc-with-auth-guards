@@ -35,5 +35,9 @@ export class MenuComponent {
   login() { this.authService.login(); }
   logout() { this.authService.logout(); }
 
-  get email() { return this.authService.identityClaims['email']; }
+  get email() {
+    return this.authService.identityClaims
+    ? this.authService.identityClaims['email']
+    : '-';
+  }
 }
