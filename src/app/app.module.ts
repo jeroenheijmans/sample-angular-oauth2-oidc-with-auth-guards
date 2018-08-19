@@ -1,22 +1,22 @@
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { OAuthStorage, ValidationHandler, JwksValidationHandler, AuthConfig, OAuthModuleConfig, OAuthModule } from 'angular-oauth2-oidc';
+import { AuthConfig, JwksValidationHandler, OAuthModule, OAuthModuleConfig, OAuthStorage, ValidationHandler } from 'angular-oauth2-oidc';
 
 import { ApiService } from './api.service';
+import { authModuleConfig } from './app-module-config';
 import { authConfig } from './auth-config';
 import { AuthGuard } from './auth-guard.service';
-import { authModuleConfig } from './app-module-config';
 
-import { AppComponent } from './app.component';
 import { AdminComponent } from './admin.component';
+import { AppComponent } from './app.component';
+import { AuthService } from './auth.service';
 import { FallbackComponent } from './fallback.component';
 import { HomeComponent } from './home.component';
 import { MenuComponent } from './menu.component';
 import { PublicComponent } from './public.component';
 import { ShouldLoginComponent } from './should-login.component';
-import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [

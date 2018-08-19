@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { OAuthService, OAuthErrorEvent } from 'angular-oauth2-oidc';
+import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
+import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Observable, BehaviorSubject, ReplaySubject, combineLatest } from 'rxjs';
 
 function allArgumentsAreTruthy(): boolean {
   return Array.from(arguments).every(x => x);

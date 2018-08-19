@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { of, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class ApiService {
