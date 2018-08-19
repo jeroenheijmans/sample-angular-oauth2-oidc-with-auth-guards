@@ -18,10 +18,13 @@ import { AuthService } from './auth.service';
       <hr>
       <p>
         <button class="btn btn-success mr-1" (click)='login()'>login</button>
-        <button class="btn btn-primary mr-4" (click)='logoff()'>logout</button>
-        <button class="btn btn-warning mr-4" (click)='refresh()'>force silent refresh</button>
-        <button class="btn btn-secondary mr-4" (click)='reload()'>force reload page</button>
-        <button class="btn btn-danger mr-1" (click)='reset()'>reset everything locally</button>
+        <button class="btn btn-primary mr-1" (click)='logout()'>logout</button>
+        <button class="btn btn-link mr-1" (click)='logoutExternally()'>logout externally...</button>
+      </p>
+      <p>
+        <button class="btn btn-warning mr-1" (click)='refresh()'>force silent refresh</button>
+        <button class="btn btn-secondary mr-1" (click)='reload()'>force reload page</button>
+        <button class="btn btn-danger mr-1" (click)='reset()'>reset storage and reload page</button>
       </p>
       <hr>
       <table class="table table-bordered table-sm table-props">
@@ -52,13 +55,17 @@ export class AppComponent {
   }
 
   login() { this.authService.login(); }
-  logoff() { this.authService.logout(); }
+  logout() { this.authService.logout(); }
   refresh() { this.authService.refresh(); }
   reload() { window.location.reload(); }
 
   reset() {
     localStorage.clear();
     this.reload();
+  }
+
+  logoutExternally() {
+    window.open(this.authService.logoutUrl);
   }
 
   get hasValidToken() { return this.authService.hasValidToken(); }
