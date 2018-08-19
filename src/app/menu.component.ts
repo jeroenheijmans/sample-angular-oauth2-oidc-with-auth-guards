@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 @Component({
   selector: 'app-menu',
   template: `<nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/home">Home</a>
       </li>
@@ -15,17 +15,25 @@ import { AuthService } from './auth.service';
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/admin">
-          Admin
           <span *ngIf="!(isAuthenticated | async)">🔒</span>
+          Admin
         </a>
       </li>
     </ul>
+    <button class="btn btn-sm btn-default" (click)="login()" *ngIf="!(isAuthenticated | async)">Log in</button>
+    <span *ngIf="isAuthenticated | async">{{email}}</span>
+    <button *ngIf="isAuthenticated | async" href="#" (click)="logout()" class="btn btn-link">(log out)</button>
   </nav>`,
 })
 export class MenuComponent {
   isAuthenticated: Observable<boolean>;
 
-  constructor(authService: AuthService) {
+  constructor(private authService: AuthService) {
     this.isAuthenticated = authService.isAuthenticated$;
   }
+
+  login() { this.authService.login(); }
+  logout() { this.authService.logoff(); }
+
+  get email() { return this.authService.identityClaims['email']; }
 }
