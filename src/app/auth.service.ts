@@ -113,7 +113,7 @@ export class AuthService {
   // These methods currently just proxy to the inner service, but
   // in real scenarios they might also mutate app/local state.
   public login() { this.oauthService.initImplicitFlow(); }
-  public logoff() { this.oauthService.logOut(); }
+  public logout() { this.oauthService.logOut(); }
   public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
 

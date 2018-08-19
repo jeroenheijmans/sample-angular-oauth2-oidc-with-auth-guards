@@ -33,7 +33,7 @@ export class MenuComponent {
   }
 
   login() { this.authService.login(); }
-  logout() { this.authService.logoff(); }
+  logout() { this.authService.logout(); }
 
   get email() { return this.authService.identityClaims['email']; }
 }

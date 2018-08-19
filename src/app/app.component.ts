@@ -52,7 +52,7 @@ export class AppComponent {
   }
 
   login() { this.authService.login(); }
-  logoff() { this.authService.logoff(); }
+  logoff() { this.authService.logout(); }
   refresh() { this.authService.refresh(); }
   reload() { window.location.reload(); }
 
