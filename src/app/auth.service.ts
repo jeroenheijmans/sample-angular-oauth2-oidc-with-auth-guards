@@ -4,7 +4,7 @@ import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
