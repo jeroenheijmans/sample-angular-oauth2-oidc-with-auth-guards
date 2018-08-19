@@ -26,9 +26,9 @@ import { AuthService } from './auth.service';
       <hr>
       <table class="table table-bordered table-sm table-props">
         <tr><th>IsAuthenticated</th><td><code>{{isAuthenticated | async}}</code></td></tr>
+        <tr><th>HasValidToken</th><td><code>{{hasValidToken}}</code></td></tr>
         <tr><th>IsDoneLoading</th><td><code>{{isDoneLoading | async}}</code></td></tr>
         <tr><th>CanActivateProtectedRoutes</th><td><code>{{canActivateProtectedRoutes | async}}</code></td></tr>
-        <tr><th>HasValidToken</th><td><code>{{hasValidToken}}</code></td></tr>
         <tr><th>IdentityClaims</th><td class="pre"><code>{{identityClaims | json}}</code></td></tr>
         <tr><th>AccessToken</th><td><code class="break-all">{{accessToken}}</code></td></tr>
         <tr><th>IdToken</th><td><code class="break-all">{{idToken}}</code></td></tr>
