@@ -1,13 +1,36 @@
 import { Injectable } from '@angular/core';
 import { OAuthService, OAuthErrorEvent } from 'angular-oauth2-oidc';
 import { filter } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, ReplaySubject, combineLatest } from 'rxjs';
+
+function allArgumentsAreTruthy(): boolean {
+  return Array.from(arguments).every(x => x);
+}
 
 @Injectable()
 export class AuthService {
 
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
+  private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
+
+  private isDoneLoadingSubject$ = new ReplaySubject<boolean>();
+  public isDoneLoading$ = this.isDoneLoadingSubject$.asObservable();
+
+  /**
+   * Publishes `true` if and only if (a) all the asynchronous initial
+   * login calls have completed or errorred, and (b) the user ended up
+   * being authenticated.
+   *
+   * In essence, it combines:
+   *
+   * - the latest known state of whether the user is authorized
+   * - whether the ajax calls for initial log in have all been done
+   */
+  public canActivateProtectedRoutes$: Observable<boolean> = combineLatest(
+    this.isAuthenticated$,
+    this.isDoneLoading$,
+    allArgumentsAreTruthy
+  );
 
   constructor (private oauthService: OAuthService) {
     // Useful for debugging:
@@ -21,7 +44,7 @@ export class AuthService {
 
     this.oauthService.events
       .subscribe(_ => {
-        this.isAuthenticatedSubject.next(this.oauthService.hasValidAccessToken());
+        this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
       });
 
     this.oauthService.events
@@ -83,7 +106,10 @@ export class AuthService {
             // next handler.
             return Promise.reject(result);
           });
-      });
+      })
+
+      .then(() => this.isDoneLoadingSubject$.next(true))
+      .catch(() => this.isDoneLoadingSubject$.next(true));
   }
 
   // These methods currently just proxy to the inner service, but

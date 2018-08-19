@@ -25,6 +25,6 @@ export class MenuComponent {
   isAuthenticated: Observable<boolean>;
 
   constructor(authService: AuthService) {
-    this.isAuthenticated = authService.isAuthenticated;
+    this.isAuthenticated = authService.isAuthenticated$;
   }
 }

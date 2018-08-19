@@ -1,10 +1,11 @@
-pre {
-  border: 1px solid #ddd;
-  background-color: #eee;
-  font-family: consolas;
-  font-size: 13px;
-  line-height: 16px;
-  padding: 10px;
-  overflow-x: auto;
-  margin-top: 0;
+.pre {
+  white-space: pre;
+}
+
+.break-all {
+  word-break: break-all;
+}
+
+.table-props tr th {
+  width: 1px;
 }
