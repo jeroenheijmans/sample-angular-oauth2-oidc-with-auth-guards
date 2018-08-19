@@ -3,10 +3,6 @@ import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-function allArgumentsAreTruthy(): boolean {
-  return Array.from(arguments).every(x => x);
-}
-
 @Injectable()
 export class AuthService {
 
@@ -29,7 +25,7 @@ export class AuthService {
   public canActivateProtectedRoutes$: Observable<boolean> = combineLatest(
     this.isAuthenticated$,
     this.isDoneLoading$
-  ).pipe(map(allArgumentsAreTruthy));
+  ).pipe(map(values => values.every(b => b)));
 
   constructor (private oauthService: OAuthService) {
     // Useful for debugging:
