@@ -47,11 +47,11 @@ export class AuthService {
       });
 
     this.oauthService.events
-      .pipe(filter(e => e.type === 'token_received'))
+      .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => this.oauthService.loadUserProfile());
 
     this.oauthService.events
-      .pipe(filter(e => e.type === 'session_terminated'))
+      .pipe(filter(e => ['session_terminated', 'session_error'].includes(e.type)))
       .subscribe(e => this.router.navigateByUrl('/should-login')); // TODO: Remember current URL
 
     this.oauthService.setupAutomaticSilentRefresh();
