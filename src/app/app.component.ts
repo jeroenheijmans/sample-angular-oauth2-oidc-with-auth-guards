@@ -23,8 +23,8 @@ import { AuthService } from './auth.service';
       </p>
       <p>
         <button class="btn btn-warning mr-1" (click)='refresh()'>force silent refresh</button>
-        <button class="btn btn-secondary mr-1" (click)='reload()'>force reload page</button>
-        <button class="btn btn-danger mr-1" (click)='reset()'>reset storage and reload page</button>
+        <button class="btn btn-secondary mr-1" (click)='reload()'>reload page</button>
+        <button class="btn btn-danger mr-1" (click)='clearStorage()'>clear storage</button>
       </p>
       <hr>
       <table class="table table-bordered table-sm table-props">
@@ -58,11 +58,7 @@ export class AppComponent {
   logout() { this.authService.logout(); }
   refresh() { this.authService.refresh(); }
   reload() { window.location.reload(); }
-
-  reset() {
-    localStorage.clear();
-    this.reload();
-  }
+  clearStorage() { localStorage.clear(); }
 
   logoutExternally() {
     window.open(this.authService.logoutUrl);
