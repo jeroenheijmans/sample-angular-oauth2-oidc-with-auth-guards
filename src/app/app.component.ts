@@ -9,8 +9,11 @@ import { Observable } from 'rxjs';
     <div class="container-fluid mt-2">
       <h1>Welcome</h1>
       <p>This is part of the app.component. Below is the router outlet.</p>
-      <hr><router-outlet></router-outlet>
-      <hr><p>You can <a routerLink="/url-without-route">go to a url without a route</a> to see the fallback route.</p>
+      <hr>
+      <router-outlet></router-outlet>
+      <div class="authenticating-loader" *ngIf="!(isDoneLoading | async)"><div>Authenticating...</div></div>
+      <hr>
+      <p>You can <a routerLink="/url-without-route">go to a url without a route</a> to see the fallback route.</p>
       <hr>
       <p>
         <button class="btn btn-success mr-1" (click)='login()'>login</button>

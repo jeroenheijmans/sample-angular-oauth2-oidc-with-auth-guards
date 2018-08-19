@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OAuthService, OAuthErrorEvent } from 'angular-oauth2-oidc';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Observable, BehaviorSubject, ReplaySubject, combineLatest } from 'rxjs';
 
 function allArgumentsAreTruthy(): boolean {
@@ -59,6 +59,9 @@ export class AuthService {
     // First we have to check to see how the IdServer is
     // currently configured:
     return this.oauthService.loadDiscoveryDocument()
+
+      // For demo purposes, we pretend the previous call was very slow
+      .then(() => new Promise(resolve => setTimeout(() => resolve(), 1000)))
 
       // 1. HASH LOGIN:
       // Try to log in via hash fragment after redirect back
