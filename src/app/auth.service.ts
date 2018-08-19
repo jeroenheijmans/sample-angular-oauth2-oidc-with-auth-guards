@@ -52,7 +52,7 @@ export class AuthService {
         return;
       }
 
-      console.warn('Noticed changes to access_token (possibly from another tab), updating isAuthenticated');
+      console.warn('Noticed changes to access_token (most likely from another tab), updating isAuthenticated');
       this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
 
       if (!this.oauthService.hasValidAccessToken()) {
@@ -123,7 +123,9 @@ export class AuthService {
               //
               // Enable this to ALWAYS force a user to login.
               // this.oauthService.initImplicitFlow();
-
+              //
+              // Instead, we'll now do this:
+              console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
               return Promise.resolve();
             }
 
