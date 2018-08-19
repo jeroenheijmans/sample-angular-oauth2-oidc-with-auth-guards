@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,8 @@ import { AuthService } from './auth.service';
         <button class="btn btn-danger mr-1" (click)='reset()'>reset everything locally</button>
       </p>
       <hr>
+      <strong>isAuthenticated</strong><pre>{{isAuthenticated | async}}</pre>
+      <strong>HasValidToken</strong><pre>{{hasValidToken}}</pre>
       <strong>AccessToken</strong><pre>{{accessToken}}</pre>
       <strong>IdToken</strong><pre>{{idToken}}</pre>
       <strong>IdentityClaims</strong><pre>{{identityClaims | json}}</pre>
@@ -26,10 +29,13 @@ import { AuthService } from './auth.service';
   </div>`,
 })
 export class AppComponent {
+  isAuthenticated: Observable<boolean>;
+
   constructor (
     private authService: AuthService,
   ) {
-    this.authService.kickOffLoginProcess();
+    this.isAuthenticated = this.authService.isAuthenticated;
+    this.authService.runInitialLoginSequence();
   }
 
   login() { this.authService.login(); }
@@ -42,6 +48,7 @@ export class AppComponent {
     this.reload();
   }
 
+  get hasValidToken() { return this.authService.hasValidToken(); }
   get accessToken() { return this.authService.accessToken; }
   get identityClaims() { return this.authService.identityClaims; }
   get idToken() { return this.authService.idToken; }
