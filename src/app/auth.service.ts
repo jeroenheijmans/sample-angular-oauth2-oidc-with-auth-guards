@@ -46,6 +46,9 @@ export class AuthService {
       }
     });
 
+    // This is tricky, as it might cause race conditions (where access_token is set in another
+    // tab before everything is said and done there.
+    // TODO: Improve this setup.
     window.addEventListener('storage', (event) => {
       // The `key` is `null` if the event was caused by `.clear()`
       if (event.key !== 'access_token' && event.key !== null) {
@@ -135,13 +138,24 @@ export class AuthService {
           });
       })
 
-      .then(() => this.isDoneLoadingSubject$.next(true))
+      .then(() => {
+        this.isDoneLoadingSubject$.next(true);
+
+        // Check for the strings 'undefined' and 'null' just to be sure. Our current
+        // login(...) should never have this, but in case someone ever calls
+        // initImplicitFlow(undefined | null) this could happen.
+        if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
+          console.log('There was state, so we are sending you to: ' + this.oauthService.state);
+          this.router.navigateByUrl(this.oauthService.state);
+        }
+      })
       .catch(() => this.isDoneLoadingSubject$.next(true));
   }
 
-  // These methods currently just proxy to the inner service, but
-  // in real scenarios they might also mutate app/local state.
-  public login() { this.oauthService.initImplicitFlow(); }
+  public login(targetUrl?: string) {
+    this.oauthService.initImplicitFlow(encodeURIComponent(targetUrl || this.router.url));
+  }
+
   public logout() { this.oauthService.logOut(); }
   public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }

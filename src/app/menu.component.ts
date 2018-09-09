@@ -14,9 +14,15 @@ import { AuthService } from './auth.service';
         <a class="nav-link" routerLinkActive="active" routerLink="/public">Public</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLinkActive="active" routerLink="/admin">
+        <a class="nav-link" routerLinkActive="active" routerLink="/admin1">
           <span *ngIf="!(isAuthenticated | async)">🔒</span>
-          Admin
+          Admin-1
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/admin2">
+          <span *ngIf="!(isAuthenticated | async)">🔒</span>
+          Admin-2
         </a>
       </li>
     </ul>

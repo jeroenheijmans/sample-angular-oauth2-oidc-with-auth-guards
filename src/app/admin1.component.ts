@@ -5,9 +5,13 @@ import { ApiService } from './api.service';
 
 @Component({
   selector: 'app-admin',
-  template: `<p class="alert alert-danger">This is the <strong>⚙ ADMIN</strong> component. (API Result: '{{item | async}}')</p>`,
+  template: `<p class="alert alert-danger">
+    This is the <strong>⚙ ADMIN</strong> component.
+    It will not redirect you to the login server.
+    (API Result: '{{item | async}}')
+  </p>`,
 })
-export class AdminComponent implements OnInit {
+export class Admin1Component implements OnInit {
   item: Observable<string>;
 
   constructor(private apiService: ApiService) { }

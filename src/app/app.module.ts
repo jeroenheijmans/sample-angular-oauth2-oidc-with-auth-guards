@@ -7,9 +7,11 @@ import { AuthConfig, JwksValidationHandler, OAuthModule, OAuthModuleConfig, OAut
 import { ApiService } from './api.service';
 import { authModuleConfig } from './app-module-config';
 import { authConfig } from './auth-config';
+import { AuthGuardWithForcedLogin } from './auth-guard-with-forced-login.service';
 import { AuthGuard } from './auth-guard.service';
 
-import { AdminComponent } from './admin.component';
+import { Admin1Component } from './admin1.component';
+import { Admin2Component } from './admin2.component';
 import { AppComponent } from './app.component';
 import { AuthService } from './auth.service';
 import { FallbackComponent } from './fallback.component';
@@ -21,7 +23,8 @@ import { ShouldLoginComponent } from './should-login.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AdminComponent,
+    Admin1Component,
+    Admin2Component,
     MenuComponent,
     HomeComponent,
     FallbackComponent,
@@ -35,7 +38,8 @@ import { ShouldLoginComponent } from './should-login.component';
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
-      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+      { path: 'admin1', component: Admin1Component, canActivate: [AuthGuard] },
+      { path: 'admin2', component: Admin2Component, canActivate: [AuthGuardWithForcedLogin] },
       { path: 'public', component: PublicComponent },
       { path: 'should-login', component: ShouldLoginComponent },
       { path: '**', component: FallbackComponent },
@@ -49,6 +53,7 @@ import { ShouldLoginComponent } from './should-login.component';
 
     AuthService,
     AuthGuard,
+    AuthGuardWithForcedLogin,
     ApiService,
   ],
   bootstrap: [AppComponent]
