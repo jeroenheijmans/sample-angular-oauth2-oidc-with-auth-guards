@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-
-import { ApiService } from './api.service';
+import { ApiService } from '../shared/api.service';
 
 @Component({
   selector: 'app-admin',
