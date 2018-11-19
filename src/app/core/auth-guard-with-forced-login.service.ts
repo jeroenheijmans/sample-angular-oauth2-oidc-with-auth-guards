@@ -25,4 +25,3 @@ export class AuthGuardWithForcedLogin implements CanActivate {
       .pipe(map(_ => this.isAuthenticated));
   }
 }
-

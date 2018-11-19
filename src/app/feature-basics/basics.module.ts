@@ -29,8 +29,6 @@ import { ShouldLoginComponent } from './should-login.component';
       { path: 'should-login', component: ShouldLoginComponent },
     ]),
   ],
-  exports: [
-  ],
   providers: [
     ApiService,
   ],
