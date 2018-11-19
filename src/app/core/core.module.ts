@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { AuthConfig, JwksValidationHandler, OAuthModule, OAuthModuleConfig, OAuthStorage, ValidationHandler } from 'angular-oauth2-oidc';
 
 import { authConfig } from './auth-config';
@@ -14,13 +14,27 @@ import { AuthService } from './auth.service';
     OAuthModule.forRoot(),
   ],
   providers: [
-    { provide: AuthConfig, useValue: authConfig },
-    { provide: OAuthModuleConfig, useValue: authModuleConfig },
-    { provide: ValidationHandler, useClass: JwksValidationHandler },
-    { provide: OAuthStorage, useValue: localStorage },
     AuthService,
     AuthGuard,
     AuthGuardWithForcedLogin,
   ],
 })
-export class CoreModule { }
+export class CoreModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: CoreModule,
+      providers: [
+        { provide: AuthConfig, useValue: authConfig },
+        { provide: OAuthModuleConfig, useValue: authModuleConfig },
+        { provide: ValidationHandler, useClass: JwksValidationHandler },
+        { provide: OAuthStorage, useValue: localStorage },
+      ]
+    };
+  }
+
+  constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
+    if (parentModule) {
+      throw new Error('CoreModule is already loaded. Import it in the AppModule only');
+    }
+  }
+}

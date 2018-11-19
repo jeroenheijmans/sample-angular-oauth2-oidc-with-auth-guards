@@ -15,7 +15,7 @@ import { FallbackComponent } from './fallback.component';
   ],
   imports: [
     BrowserModule,
-    CoreModule,
+    CoreModule.forRoot(),
     RouterModule.forRoot([
       { path: '', redirectTo: 'basics/home', pathMatch: 'full' },
       { path: 'basics', loadChildren: './feature-basics/basics.module#BasicsModule' },

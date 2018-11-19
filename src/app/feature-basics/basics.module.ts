@@ -24,7 +24,7 @@ import { ShouldLoginComponent } from './should-login.component';
     RouterModule.forChild([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
-      { path: 'admin1', component: Admin1Component /*, canActivate: [AuthGuard] */ },
+      { path: 'admin1', component: Admin1Component, canActivate: [AuthGuard] },
       { path: 'public', component: PublicComponent },
       { path: 'should-login', component: ShouldLoginComponent },
     ]),
