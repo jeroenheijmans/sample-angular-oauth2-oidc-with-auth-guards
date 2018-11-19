@@ -9,14 +9,12 @@ import { SharedModule } from '../shared/shared.module';
 import { Admin1Component } from './admin1.component';
 import { HomeComponent } from './home.component';
 import { PublicComponent } from './public.component';
-import { ShouldLoginComponent } from './should-login.component';
 
 @NgModule({
   declarations: [
     Admin1Component,
     HomeComponent,
     PublicComponent,
-    ShouldLoginComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +24,6 @@ import { ShouldLoginComponent } from './should-login.component';
       { path: 'home', component: HomeComponent },
       { path: 'admin1', component: Admin1Component, canActivate: [AuthGuard] },
       { path: 'public', component: PublicComponent },
-      { path: 'should-login', component: ShouldLoginComponent },
     ]),
   ],
   providers: [

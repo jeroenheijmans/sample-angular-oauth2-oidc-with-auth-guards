@@ -80,6 +80,11 @@ export class AuthService {
   }
 
   public runInitialLoginSequence(): Promise<void> {
+    if (location.hash) {
+      console.log('Encountered hash fragment, plotting as table...');
+      console.table(location.hash.substr(1).split('&').map(kvp => kvp.split('=')));
+    }
+
     // 0. LOAD CONFIG:
     // First we have to check to see how the IdServer is
     // currently configured:

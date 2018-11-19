@@ -6,12 +6,14 @@ import { AppMenuComponent } from './app-menu.component';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { FallbackComponent } from './fallback.component';
+import { ShouldLoginComponent } from './should-login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppMenuComponent,
     FallbackComponent,
+    ShouldLoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -20,6 +22,7 @@ import { FallbackComponent } from './fallback.component';
       { path: '', redirectTo: 'basics/home', pathMatch: 'full' },
       { path: 'basics', loadChildren: './feature-basics/basics.module#BasicsModule' },
       { path: 'extras', loadChildren: './feature-extras/extras.module#ExtrasModule' },
+      { path: 'should-login', component: ShouldLoginComponent },
       { path: '**', component: FallbackComponent },
     ])
   ],
