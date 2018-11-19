@@ -19,4 +19,3 @@ export class AuthGuard implements CanActivate {
       .pipe(tap(x => console.log('You tried to go to ' + state.url + ' and this guard said ' + x)));
   }
 }
-
