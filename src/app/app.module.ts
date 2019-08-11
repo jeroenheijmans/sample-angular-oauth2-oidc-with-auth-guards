@@ -20,8 +20,11 @@ import { ShouldLoginComponent } from './should-login.component';
     CoreModule.forRoot(),
     RouterModule.forRoot([
       { path: '', redirectTo: 'basics/home', pathMatch: 'full' },
-      { path: 'basics', loadChildren: './feature-basics/basics.module#BasicsModule' },
-      { path: 'extras', loadChildren: './feature-extras/extras.module#ExtrasModule' },
+
+      // Note: this way of module loading requires this in your tsconfig.json: "module": "esnext"
+      { path: 'basics', loadChildren: () => import('./feature-basics/basics.module').then(m => m.BasicsModule) },
+      { path: 'extras', loadChildren: () => import('./feature-extras/extras.module').then(m => m.ExtrasModule) },
+
       { path: 'should-login', component: ShouldLoginComponent },
       { path: '**', component: FallbackComponent },
     ])
