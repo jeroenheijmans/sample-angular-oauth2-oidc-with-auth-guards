@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ApiService {
-  constructor(private authService: OAuthService) { }
+  constructor(private http: HttpClient) { }
 
-  getRandomItem(): Observable<string> {
-    if (this.authService.hasValidAccessToken()) {
-      console.log('OK! We have a valid access token.');
-    } else {
-      console.error('ERROR! No valid access token for calling the API.');
-    }
-
-    return of<string>('Fake API result');
+  getProtectedApiResponse(): Observable<string> {
+    return this.http.get<any>('https://demo.identityserver.io/api/test')
+      .pipe(
+        map(response => response.find(i => i.type === 'iss').value),
+        map(iss => '☁ API Success from ' + iss),
+        catchError((e: HttpErrorResponse) => of(`🌩 API Error: ${e.status} ${e.statusText}`)),
+      );
   }
 }

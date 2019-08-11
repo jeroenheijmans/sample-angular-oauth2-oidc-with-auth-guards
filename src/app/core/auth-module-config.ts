@@ -2,7 +2,7 @@ import { OAuthModuleConfig } from 'angular-oauth2-oidc';
 
 export const authModuleConfig: OAuthModuleConfig = {
   resourceServer: {
-    allowedUrls: ['http://localhost:8080'],
+    allowedUrls: ['https://demo.identityserver.io/api'],
     sendAccessToken: true,
   }
 };

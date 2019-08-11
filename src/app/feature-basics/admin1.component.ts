@@ -8,15 +8,15 @@ import { ApiService } from '../shared/api.service';
   template: `<p class="alert alert-danger">
     This is the <strong>⚙ ADMIN</strong> component.
     It will not redirect you to the login server.
-    (API Result: '{{item | async}}')
+    - {{ apiResponse | async }}
   </p>`,
 })
 export class Admin1Component implements OnInit {
-  item: Observable<string>;
+  apiResponse: Observable<string>;
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    this.item = this.apiService.getRandomItem();
+    this.apiResponse = this.apiService.getProtectedApiResponse();
   }
 }
