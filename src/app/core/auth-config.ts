@@ -1,11 +1,11 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 
 export const authConfig: AuthConfig = {
-  issuer: 'https://steyer-identity-server.azurewebsites.net/identity',
-  clientId: 'spa-demo',
+  issuer: 'https://demo.identityserver.io',
+  clientId: 'implicit',
   redirectUri: window.location.origin + '/index.html',
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-  scope: 'openid profile email',
+  scope: 'openid profile email api',
   silentRefreshTimeout: 5000, // For faster testing
   timeoutFactor: 0.25, // For faster testing
   sessionChecksEnabled: true,
