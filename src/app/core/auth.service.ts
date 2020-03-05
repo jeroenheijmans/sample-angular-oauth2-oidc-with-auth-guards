@@ -76,6 +76,10 @@ export class AuthService {
       .pipe(filter(e => ['session_terminated', 'session_error'].includes(e.type)))
       .subscribe(e => this.navigateToLoginPage());
 
+    // This *does* work with v9.0.0 as it detects code+pkce flow and sets up
+    // refreshToken() calls that require offline_access, instead of actually
+    // calling silentRefresh, which would fail because of this issue:
+    // https://github.com/manfredsteyer/angular-oauth2-oidc/issues/600
     this.oauthService.setupAutomaticSilentRefresh();
   }
 
@@ -104,10 +108,9 @@ export class AuthService {
         }
 
         // 2. SILENT LOGIN:
-        // Try to log in via silent refresh because the IdServer
-        // might have a cookie to remember the user, so we can
-        // prevent doing a redirect:
-        return this.oauthService.silentRefresh()
+        // Try to log in via a refresh because then we can prevent
+        // needing to redirect the user:
+        return this.startWithRefresh()
           .then(() => Promise.resolve())
           .catch(result => {
             // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
@@ -161,6 +164,17 @@ export class AuthService {
       .catch(() => this.isDoneLoadingSubject$.next(true));
   }
 
+  private startWithRefresh() {
+    if (this.oauthService.getRefreshToken()) {
+      console.log('Found a refresh token, trying to use it.');
+      return this.oauthService.refreshToken();
+    }
+
+    // No silent refresh via iframe is supported for code flow yet.
+    // See also: https://github.com/manfredsteyer/angular-oauth2-oidc/issues/600
+    return Promise.reject();
+  }
+
   public login(targetUrl?: string) {
     // Note: before version 9.1.0 of the library you needed to
     // call encodeURIComponent on the argument to the method.
@@ -168,7 +182,13 @@ export class AuthService {
   }
 
   public logout() { this.oauthService.logOut(); }
-  public refresh() { this.oauthService.silentRefresh(); }
+  public refresh() {
+    // Silent refresh via iframe is not supported (yet?) for the code+pkce flow.
+    // See also: https://github.com/manfredsteyer/angular-oauth2-oidc/issues/600
+    // this.oauthService.silentRefresh();
+    // So for now we do this instead:
+    this.oauthService.refreshToken();
+  }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
 
   // These normally won't be exposed from a service like this, but

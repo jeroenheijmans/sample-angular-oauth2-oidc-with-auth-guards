@@ -13,7 +13,7 @@ This demonstrates:
 - Asynchronous loading of login information (and thus async auth guards)
 - Using `localStorage` for storing tokens (use at your own risk!)
 - Loading IDS details from its discovery document
-- Trying silent refresh on app startup before potientially starting a login flow
+- Trying refresh on app startup before potientially starting a login flow
 - OpenID's external logout features
 
 Most interesting features can be found in [the core module](./src/app/core).
