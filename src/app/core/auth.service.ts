@@ -150,8 +150,12 @@ export class AuthService {
         // login(...) should never have this, but in case someone ever calls
         // initImplicitFlow(undefined | null) this could happen.
         if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
-          console.log('There was state, so we are sending you to: ' + this.oauthService.state);
-          this.router.navigateByUrl(this.oauthService.state);
+          let stateUrl = this.oauthService.state;
+          if (stateUrl.startsWith('/') === false) {
+            stateUrl = decodeURIComponent(stateUrl);
+          }
+          console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
+          this.router.navigateByUrl(stateUrl);
         }
       })
       .catch(() => this.isDoneLoadingSubject$.next(true));
