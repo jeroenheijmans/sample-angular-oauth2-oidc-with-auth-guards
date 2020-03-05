@@ -1,7 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
-import { AuthConfig, OAuthModule, OAuthModuleConfig, OAuthStorage, ValidationHandler, } from 'angular-oauth2-oidc';
-import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
+import { AuthConfig, NullValidationHandler, OAuthModule, OAuthModuleConfig, OAuthStorage, ValidationHandler, } from 'angular-oauth2-oidc';
 import { authConfig } from './auth-config';
 import { AuthGuardWithForcedLogin } from './auth-guard-with-forced-login.service';
 import { AuthGuard } from './auth-guard.service';
@@ -31,7 +30,7 @@ export class CoreModule {
       providers: [
         { provide: AuthConfig, useValue: authConfig },
         { provide: OAuthModuleConfig, useValue: authModuleConfig },
-        { provide: ValidationHandler, useClass: JwksValidationHandler },
+        { provide: ValidationHandler, useClass: NullValidationHandler },
         { provide: OAuthStorage, useFactory: storageFactory },
       ]
     };
