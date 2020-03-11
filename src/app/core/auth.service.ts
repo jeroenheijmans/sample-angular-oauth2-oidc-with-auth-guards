@@ -176,7 +176,7 @@ export class AuthService {
   }
 
   public login(targetUrl?: string) {
-    this.oauthService.initImplicitFlow(encodeURIComponent(targetUrl || this.router.url));
+    this.oauthService.initLoginFlow(encodeURIComponent(targetUrl || this.router.url));
   }
 
   public logout() { this.oauthService.logOut(); }
