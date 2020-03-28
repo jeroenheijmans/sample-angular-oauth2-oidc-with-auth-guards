@@ -158,7 +158,9 @@ export class AuthService {
   }
 
   public login(targetUrl?: string) {
-    this.oauthService.initImplicitFlow(encodeURIComponent(targetUrl || this.router.url));
+    // Note: before version 9.1.0 of the library you needed to
+    // call encodeURIComponent on the argument to the method.
+    this.oauthService.initImplicitFlow(targetUrl || this.router.url);
   }
 
   public logout() { this.oauthService.logOut(); }
