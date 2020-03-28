@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
+import { OAuthErrorEvent, OAuthService, OAuthEvent, TokenResponse } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
@@ -76,10 +76,6 @@ export class AuthService {
       .pipe(filter(e => ['session_terminated', 'session_error'].includes(e.type)))
       .subscribe(e => this.navigateToLoginPage());
 
-    // This *does* work with v9.0.0 as it detects code+pkce flow and sets up
-    // refreshToken() calls that require offline_access, instead of actually
-    // calling silentRefresh, which would fail because of this issue:
-    // https://github.com/manfredsteyer/angular-oauth2-oidc/issues/600
     this.oauthService.setupAutomaticSilentRefresh();
   }
 
@@ -164,15 +160,14 @@ export class AuthService {
       .catch(() => this.isDoneLoadingSubject$.next(true));
   }
 
-  private startWithRefresh() {
+  private startWithRefresh(): Promise<TokenResponse | OAuthEvent> {
     if (this.oauthService.getRefreshToken()) {
       console.log('Found a refresh token, trying to use it.');
       return this.oauthService.refreshToken();
     }
 
-    // No silent refresh via iframe is supported for code flow yet.
-    // See also: https://github.com/manfredsteyer/angular-oauth2-oidc/issues/600
-    return Promise.reject();
+    console.log('Found no refresh token, trying iframe based refresh');
+    return this.oauthService.silentRefresh();
   }
 
   public login(targetUrl?: string) {
@@ -182,13 +177,7 @@ export class AuthService {
   }
 
   public logout() { this.oauthService.logOut(); }
-  public refresh() {
-    // Silent refresh via iframe is not supported (yet?) for the code+pkce flow.
-    // See also: https://github.com/manfredsteyer/angular-oauth2-oidc/issues/600
-    // this.oauthService.silentRefresh();
-    // So for now we do this instead:
-    this.oauthService.refreshToken();
-  }
+  public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
 
   // These normally won't be exposed from a service like this, but
