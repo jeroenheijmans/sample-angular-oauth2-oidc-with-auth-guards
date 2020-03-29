@@ -104,9 +104,8 @@ export class AuthService {
         }
 
         // 2. SILENT LOGIN:
-        // Try to log in via silent refresh because the IdServer
-        // might have a cookie to remember the user, so we can
-        // prevent doing a redirect:
+        // Try to log in via a refresh because then we can prevent
+        // needing to redirect the user:
         return this.oauthService.silentRefresh()
           .then(() => Promise.resolve())
           .catch(result => {
@@ -150,8 +149,12 @@ export class AuthService {
         // login(...) should never have this, but in case someone ever calls
         // initImplicitFlow(undefined | null) this could happen.
         if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
-          console.log('There was state, so we are sending you to: ' + this.oauthService.state);
-          this.router.navigateByUrl(this.oauthService.state);
+          let stateUrl = this.oauthService.state;
+          if (stateUrl.startsWith('/') === false) {
+            stateUrl = decodeURIComponent(stateUrl);
+          }
+          console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
+          this.router.navigateByUrl(stateUrl);
         }
       })
       .catch(() => this.isDoneLoadingSubject$.next(true));
@@ -160,7 +163,7 @@ export class AuthService {
   public login(targetUrl?: string) {
     // Note: before version 9.1.0 of the library you needed to
     // call encodeURIComponent on the argument to the method.
-    this.oauthService.initImplicitFlow(targetUrl || this.router.url);
+    this.oauthService.initLoginFlow(targetUrl || this.router.url);
   }
 
   public logout() { this.oauthService.logOut(); }
@@ -170,6 +173,7 @@ export class AuthService {
   // These normally won't be exposed from a service like this, but
   // for debugging it makes sense.
   public get accessToken() { return this.oauthService.getAccessToken(); }
+  public get refreshToken() { return this.oauthService.getRefreshToken(); }
   public get identityClaims() { return this.oauthService.getIdentityClaims(); }
   public get idToken() { return this.oauthService.getIdToken(); }
   public get logoutUrl() { return this.oauthService.logoutUrl; }

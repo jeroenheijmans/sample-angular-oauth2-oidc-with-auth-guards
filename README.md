@@ -6,17 +6,22 @@ This repository shows a basic Angular CLI application with [the `angular-oauth2-
 
 This demonstrates:
 
-- Use of **the Implicit Flow**, see [#24 for Code Flow](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/24) support
+- Use of **the Code+PKCE Flow** (so no JWKS validation)
 - Modules (core, shared, and two feature modules)
 - An auth guard that forces you to login when navigating to protected routes
 - An auth guard that just prevents you from navigating to protected routes
 - Asynchronous loading of login information (and thus async auth guards)
 - Using `localStorage` for storing tokens (use at your own risk!)
 - Loading IDS details from its discovery document
-- Trying silent refresh on app startup before potientially starting a login flow
+- Trying refresh on app startup before potientially starting a login flow
 - OpenID's external logout features
 
 Most interesting features can be found in [the core module](./src/app/core).
+
+## Implicit Flow
+
+If you need an example of the _Implicit Flow_ check out [the last commit with that flow](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/commit/3c95d8891b4c086d5cd109d05cdd66171ef4b960) or even earlier versions.
+For new applications Code+PKCE flow is recommended for JavaScript clients, and this example repository now demonstrates this as the main use case.
 
 ## Usage
 
