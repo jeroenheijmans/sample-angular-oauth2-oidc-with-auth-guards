@@ -6,7 +6,7 @@ This repository shows a basic Angular CLI application with [the `angular-oauth2-
 
 This demonstrates:
 
-- Use of **the Implicit Flow**, see [#24 for Code Flow](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/24) support
+- Use of **the Implicit Flow**, see [the `master` branch for Code Flow](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards) support (now the recommended flow for SPA's)
 - Modules (core, shared, and two feature modules)
 - An auth guard that forces you to login when navigating to protected routes
 - An auth guard that just prevents you from navigating to protected routes
