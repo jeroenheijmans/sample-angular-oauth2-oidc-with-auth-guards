@@ -7,7 +7,7 @@ export const authConfig: AuthConfig = {
   redirectUri: window.location.origin + '/index.html',
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
   scope: 'openid profile email api', // Ask offline_access to support refresh token refreshes
-  useSilentRefresh: true,
+  useSilentRefresh: true, // Needed for Code Flow to suggest using iframe-based refreshes
   silentRefreshTimeout: 5000, // For faster testing
   timeoutFactor: 0.25, // For faster testing
   sessionChecksEnabled: true,
