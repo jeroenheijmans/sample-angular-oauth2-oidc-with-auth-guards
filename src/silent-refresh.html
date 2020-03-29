@@ -2,7 +2,19 @@
 <html>
 <body>
     <script>
-    parent.postMessage(location.hash, location.origin);
+      console.log("The silent-refresh.html file was loaded and now posting to the parent.");
+
+      // For code flow with IdentityServer4 the redirect will contain the new code in
+      // the location.search. However, the oauth library expects it in the hash fragment
+      // so we need to "fake" that.
+      //
+      // We can't just set `silentRefreshMessagePrefix` on AuthConfig, because the normal
+      // redirect after interactive login *does* use the hash fragment, so we'd break that.
+      //
+      // See also: https://github.com/manfredsteyer/angular-oauth2-oidc/issues/777
+      const fakeHashFragment = location.search.replace(/^\?/, "#");
+
+      parent.postMessage(fakeHashFragment, location.origin);
     </script>
 </body>
 </html>

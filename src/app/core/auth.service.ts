@@ -106,7 +106,7 @@ export class AuthService {
         // 2. SILENT LOGIN:
         // Try to log in via a refresh because then we can prevent
         // needing to redirect the user:
-        return this.startWithRefresh()
+        return this.tryNoPromptRefresh()
           .then(() => Promise.resolve())
           .catch(result => {
             // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
@@ -160,7 +160,7 @@ export class AuthService {
       .catch(() => this.isDoneLoadingSubject$.next(true));
   }
 
-  private startWithRefresh(): Promise<TokenResponse | OAuthEvent> {
+  private tryNoPromptRefresh(): Promise<TokenResponse | OAuthEvent> {
     if (this.oauthService.getRefreshToken()) {
       console.log('Found a refresh token, trying to use it.');
       return this.oauthService.refreshToken();
@@ -177,7 +177,7 @@ export class AuthService {
   }
 
   public logout() { this.oauthService.logOut(); }
-  public refresh() { this.oauthService.silentRefresh(); }
+  public refresh() { this.tryNoPromptRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
 
   // These normally won't be exposed from a service like this, but

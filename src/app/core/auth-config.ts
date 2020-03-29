@@ -4,10 +4,9 @@ export const authConfig: AuthConfig = {
   issuer: 'https://demo.identityserver.io',
   clientId: 'spa', // The "Auth Code + PKCE" client
   responseType: 'code',
-  useSilentRefresh: true, // Only needed for Code Flow
   redirectUri: window.location.origin + '/index.html',
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-  scope: 'openid profile email api',
+  scope: 'openid profile email api', // Ask offline_access to support refresh token refreshes
   silentRefreshTimeout: 5000, // For faster testing
   timeoutFactor: 0.25, // For faster testing
   sessionChecksEnabled: true,
