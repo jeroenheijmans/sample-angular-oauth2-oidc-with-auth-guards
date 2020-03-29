@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { OAuthErrorEvent, OAuthService, OAuthEvent, TokenResponse } from 'angular-oauth2-oidc';
+import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
@@ -106,7 +106,7 @@ export class AuthService {
         // 2. SILENT LOGIN:
         // Try to log in via a refresh because then we can prevent
         // needing to redirect the user:
-        return this.tryNoPromptRefresh()
+        return this.oauthService.silentRefresh()
           .then(() => Promise.resolve())
           .catch(result => {
             // Subset of situations from https://openid.net/specs/openid-connect-core-1_0.html#AuthError
@@ -160,16 +160,6 @@ export class AuthService {
       .catch(() => this.isDoneLoadingSubject$.next(true));
   }
 
-  private tryNoPromptRefresh(): Promise<TokenResponse | OAuthEvent> {
-    if (this.oauthService.getRefreshToken()) {
-      console.log('Found a refresh token, trying to use it.');
-      return this.oauthService.refreshToken();
-    }
-
-    console.log('Found no refresh token, trying iframe based refresh');
-    return this.oauthService.silentRefresh();
-  }
-
   public login(targetUrl?: string) {
     // Note: before version 9.1.0 of the library you needed to
     // call encodeURIComponent on the argument to the method.
@@ -177,7 +167,7 @@ export class AuthService {
   }
 
   public logout() { this.oauthService.logOut(); }
-  public refresh() { this.tryNoPromptRefresh(); }
+  public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
 
   // These normally won't be exposed from a service like this, but
