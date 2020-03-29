@@ -4,6 +4,8 @@ This repository shows a basic Angular CLI application with [the `angular-oauth2-
 
 ## Features
 
+⚠ To see **the Implicit Flow** refer to [the `implicit-flow` branch](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/tree/implicit-flow) (which might be getting outdated, since Code Flow is now the recommended flow).
+
 This demonstrates:
 
 - Use of **the Code+PKCE Flow** (so no JWKS validation)
