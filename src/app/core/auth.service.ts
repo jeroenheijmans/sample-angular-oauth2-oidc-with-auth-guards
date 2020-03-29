@@ -23,10 +23,10 @@ export class AuthService {
    * - the latest known state of whether the user is authorized
    * - whether the ajax calls for initial log in have all been done
    */
-  public canActivateProtectedRoutes$: Observable<boolean> = combineLatest(
+  public canActivateProtectedRoutes$: Observable<boolean> = combineLatest([
     this.isAuthenticated$,
     this.isDoneLoading$
-  ).pipe(map(values => values.every(b => b)));
+  ]).pipe(map(values => values.every(b => b)));
 
   private navigateToLoginPage() {
     // TODO: Remember current URL

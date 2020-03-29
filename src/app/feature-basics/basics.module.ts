@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { AuthGuard } from '../core/auth-guard.service';
 import { ApiService } from '../shared/api.service';
 import { SharedModule } from '../shared/shared.module';
-
 import { Admin1Component } from './admin1.component';
 import { HomeComponent } from './home.component';
 import { PublicComponent } from './public.component';
