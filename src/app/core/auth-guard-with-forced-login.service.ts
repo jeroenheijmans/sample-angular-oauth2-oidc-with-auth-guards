@@ -7,12 +7,12 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthGuardWithForcedLogin implements CanActivate {
-  private isAuthenticated: boolean;
+
 
   constructor(
     private authService: AuthService,
   ) {
-    this.authService.isAuthenticated$.subscribe(i => this.isAuthenticated = i);
+
   }
 
   canActivate(
@@ -20,8 +20,9 @@ export class AuthGuardWithForcedLogin implements CanActivate {
     state: RouterStateSnapshot,
   ): Observable<boolean> {
     return this.authService.isDoneLoading$
+      .pipe(withLatestFrom(this.authService.isAuthenticated$))
       .pipe(filter(isDone => isDone))
-      .pipe(tap(_ => this.isAuthenticated || this.authService.login(state.url)))
-      .pipe(map(_ => this.isAuthenticated));
+      .pipe(tap([_, isAuthenticated] => isAuthenticated || this.authService.login(state.url)))
+      .pipe(map([_, isAuthenticated] => isAuthenticated));
   }
 }
