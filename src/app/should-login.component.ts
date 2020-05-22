@@ -11,6 +11,6 @@ export class ShouldLoginComponent {
 
   public login($event) {
     $event.preventDefault();
-    this.authService.initImplicitFlow();
+    this.authService.initLoginFlow();
   }
 }
