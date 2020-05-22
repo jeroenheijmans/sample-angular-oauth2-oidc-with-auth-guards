@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 
@@ -12,7 +12,6 @@ export class AuthGuardWithForcedLogin implements CanActivate {
   constructor(
     private authService: AuthService,
   ) {
-
   }
 
   canActivate(
@@ -21,8 +20,8 @@ export class AuthGuardWithForcedLogin implements CanActivate {
   ): Observable<boolean> {
     return this.authService.isDoneLoading$
       .pipe(filter(isDone => isDone))
-      .pipe(withLatestFrom(this.authService.isAuthenticated$))
-      .pipe(tap(([_, isAuthenticated]) => isAuthenticated || this.authService.login(state.url)))
-      .pipe(map(([_, isAuthenticated]) => isAuthenticated));
+      .pipe(switchMap(_ => this.authService.isAuthenticated$))
+      .pipe(tap(isAuthenticated => isAuthenticated || this.authService.login(state.url)))
+      .pipe(map(isAuthenticated => isAuthenticated));
   }
 }
