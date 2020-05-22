@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 
@@ -22,7 +22,6 @@ export class AuthGuardWithForcedLogin implements CanActivate {
       filter(isDone => isDone),
       switchMap(_ => this.authService.isAuthenticated$),
       tap(isAuthenticated => isAuthenticated || this.authService.login(state.url)),
-      map(isAuthenticated => isAuthenticated),
     );
   }
 }
