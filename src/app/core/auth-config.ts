@@ -2,7 +2,7 @@ import { AuthConfig } from 'angular-oauth2-oidc';
 
 export const authConfig: AuthConfig = {
   issuer: 'https://demo.identityserver.io',
-  clientId: 'spa', // The "Auth Code + PKCE" client
+  clientId: 'interactive.public', // The "Auth Code + PKCE" client
   responseType: 'code',
   redirectUri: window.location.origin + '/index.html',
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
