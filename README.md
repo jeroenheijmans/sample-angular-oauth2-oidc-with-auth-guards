@@ -2,6 +2,8 @@
 
 This repository shows a basic Angular CLI application with [the `angular-oauth2-oidc` library](https://github.com/manfredsteyer/angular-oauth2-oidc) and Angular AuthGuards.
 
+[![Lint-Build-Test GitHub Actions Status](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/workflows/Lint-Build-Test/badge.svg)](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/actions)
+
 ## ⚠ Third-party Cookies
 
 Browser vendors are implementing increasingly strict rules around cookies.
