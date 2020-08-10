@@ -6,6 +6,14 @@ export class AppPage {
   }
 
   getTitleText(): Promise<string> {
-    return element(by.css('app-root .content span')).getText() as Promise<string>;
+    return element(by.css('h1')).getText() as Promise<string>;
+  }
+
+  getMainContentText(): Promise<string> {
+    return element(by.css('app-home p.alert')).getText() as Promise<string>;
+  }
+
+  hasButtonWithText(text: string): Promise<boolean> {
+    return element(by.cssContainingText('.btn', text)).isPresent() as Promise<boolean>;
   }
 }
