@@ -1,7 +1,8 @@
-import { browser, logging } from 'protractor';
+import { browser } from 'protractor';
 
 import { AppPage } from './app.po';
 import { DemoIdentityServer4Page } from './demo-identityserver4.po';
+import { assertNoUnexpectedBrowserErrorsOnConsole } from './util';
 
 describe('Happy Path Flow', () => {
   let appPage: AppPage;
@@ -83,4 +84,7 @@ describe('Happy Path Flow', () => {
     expect(await appPage.getShownDebugValue('canActivateProtectedRoutes')).toBe('false');
   });
 
+  afterEach(async () => {
+    await assertNoUnexpectedBrowserErrorsOnConsole();
+  });
 });
