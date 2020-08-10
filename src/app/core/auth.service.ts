@@ -40,9 +40,9 @@ export class AuthService {
     // Useful for debugging:
     this.oauthService.events.subscribe(event => {
       if (event instanceof OAuthErrorEvent) {
-        console.error(event);
+        console.error('OAuthErrorEvent Object:', event);
       } else {
-        console.warn(event);
+        console.warn('OAuthEvent Object:', event);
       }
     });
 

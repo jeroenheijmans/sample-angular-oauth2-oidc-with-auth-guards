@@ -39,8 +39,10 @@ describe('Basic app structure', () => {
           && !entry.message.includes('Failed to load resource')
       ));
 
-    expect(logs).not.toContain(jasmine.objectContaining({
-      level: logging.Level.SEVERE,
-    } as logging.Entry));
+    logs.forEach(l => {
+      expect(l.level).not.toBe(logging.Level.SEVERE,
+        `Unexpected log of ${l.level} level found at ${new Date(l.timestamp).toISOString()} with message: ${l.message}`
+      );
+    });
   });
 });
