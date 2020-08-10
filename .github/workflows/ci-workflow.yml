@@ -1,6 +1,6 @@
 name: Lint-Build-Test
 on:
-  push
+  push:
     branches:
       - master
   pull_request:
@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Taken from: https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows#example-using-the-cache-action
+    # Based on: https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows#example-using-the-cache-action
     - name: Cache node modules
       uses: actions/cache@v2
       env:
