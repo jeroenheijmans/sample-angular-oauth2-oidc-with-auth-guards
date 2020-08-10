@@ -27,7 +27,7 @@ import { AuthService } from './core/auth.service';
       </li>
     </ul>
     <button class="btn btn-sm btn-default" (click)="login()" *ngIf="!(isAuthenticated | async)">Log in</button>
-    <span *ngIf="isAuthenticated | async">{{email}}</span>
+    <span *ngIf="isAuthenticated | async" id="email">{{email}}</span>
     <button *ngIf="isAuthenticated | async" href="#" (click)="logout()" class="btn btn-link">(log out)</button>
   </nav>`,
 })
