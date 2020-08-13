@@ -13,9 +13,8 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.1.0
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_USERNAME: sample-angular-oauth2-oidc-with-auth-guards
+        SLACK_USERNAME: ${{github.repository}}
         SLACK_FOOTER: null
-        SLACK_ICON_EMOJI: ':bell:'
-        SLACK_TITLE: 'PR titled «${{ github.event.pull_request.title }}»'
-        SLACK_MESSAGE: 'See :tada: ${{ github.event.pull_request.html_url }}'
+        SLACK_TITLE: 'PR opened/updated: «${{ github.event.pull_request.title }}»'
+        SLACK_MESSAGE: ':tada: ${{ github.event.pull_request.html_url }}'
         MSG_MINIMAL: true
