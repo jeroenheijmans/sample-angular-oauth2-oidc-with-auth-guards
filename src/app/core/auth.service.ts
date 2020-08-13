@@ -71,6 +71,7 @@ export class AuthService {
         this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
       });
 
+    // this might not be required (e.g. for azure ad you need to provide additional permissions for the graph endpoint)
     this.oauthService.events
       .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => this.oauthService.loadUserProfile());
@@ -79,6 +80,18 @@ export class AuthService {
       .pipe(filter(e => ['session_terminated', 'session_error'].includes(e.type)))
       .subscribe(e => this.navigateToLoginPage());
 
+    /**
+     * For azure ad, add the login_hint query param here
+     * otherwise you will see a dialog to choose the account, if you are authenticated with multiple accounts, on refresh
+     * @see https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-implicit-grant-flow
+     *
+     * e.g.
+     *  this._oAuthService.setupAutomaticSilentRefresh({
+     *   login_hint: user-email,
+     *  });
+     *
+     * You can get the users email from the claim, this.oauthService.getIdentityClaims() -> preferred_username
+     */
     this.oauthService.setupAutomaticSilentRefresh();
   }
 
