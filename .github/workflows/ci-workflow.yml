@@ -41,3 +41,15 @@ jobs:
 
     - name: Tests
       run: npm run e2e -- --configuration=ci
+
+    - name: Failure notifications
+      # if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@v2.1.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: ${{github.repository}}
+        SLACK_FOOTER: null
+        SLACK_COLOR: '#d0380b'
+        SLACK_TITLE: 'CI Failure'
+        SLACK_MESSAGE: ':no_entry: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}'
+        MSG_MINIMAL: true
