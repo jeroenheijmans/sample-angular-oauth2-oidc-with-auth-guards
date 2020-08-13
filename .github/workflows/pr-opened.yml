@@ -1,0 +1,20 @@
+name: PR notifications
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  notify:
+    name: Notify
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send to Slack
+      uses: rtCamp/action-slack-notify@v2.1.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: ${{github.repository}}
+        SLACK_FOOTER: null
+        SLACK_TITLE: 'PR opened/updated: «${{ github.event.pull_request.title }}»'
+        SLACK_MESSAGE: ':tada: ${{ github.event.pull_request.html_url }}'
+        MSG_MINIMAL: true
