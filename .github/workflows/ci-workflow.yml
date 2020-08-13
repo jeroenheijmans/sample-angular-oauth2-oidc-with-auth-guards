@@ -43,7 +43,7 @@ jobs:
       run: npm run e2e -- --configuration=ci
 
     - name: Failure notifications
-      # if: ${{ failure() }}
+      if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@v2.1.0
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
