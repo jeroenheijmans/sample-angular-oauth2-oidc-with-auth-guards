@@ -33,7 +33,7 @@ export class AuthService {
     this.router.navigateByUrl('/should-login');
   }
 
-  constructor (
+  constructor(
     private oauthService: OAuthService,
     private router: Router,
   ) {
@@ -48,7 +48,7 @@ export class AuthService {
 
     // This is tricky, as it might cause race conditions (where access_token is set in another
     // tab before everything is said and done there.
-    // TODO: Improve this setup.
+    // TODO: Improve this setup. See: https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/2
     window.addEventListener('storage', (event) => {
       // The `key` is `null` if the event was caused by `.clear()`
       if (event.key !== 'access_token' && event.key !== null) {
@@ -129,7 +129,7 @@ export class AuthService {
               // enter credentials.
               //
               // Enable this to ALWAYS force a user to login.
-              // this.oauthService.initImplicitFlow();
+              // this.login();
               //
               // Instead, we'll now do this:
               console.warn('User interaction is needed to log in, we will wait for the user to manually log in.');
