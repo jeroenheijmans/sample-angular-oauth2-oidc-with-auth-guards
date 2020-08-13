@@ -32,4 +32,3 @@ import { ShouldLoginComponent } from './should-login.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-;
