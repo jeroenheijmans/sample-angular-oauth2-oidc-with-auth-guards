@@ -40,7 +40,7 @@ jobs:
       run: npm run build -- --prod
 
     - name: Tests
-      run: npm run e2e -- --configuration=ci
+      run: npm run e2e -- --configuration=ci --webdriverUpdate=false
 
     - name: Failure notifications
       if: ${{ failure() }}
