@@ -33,13 +33,17 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Linting
+    - name: Lint
       run: npm run lint
 
     - name: Build
       run: npm run build -- --prod
 
-    - name: Tests
+    # See https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/57
+    - name: Update Chrome
+      run: sudo apt-get update && sudo apt-get install google-chrome-stable
+
+    - name: Test
       run: npm run e2e -- --configuration=ci
 
     - name: Failure notifications
