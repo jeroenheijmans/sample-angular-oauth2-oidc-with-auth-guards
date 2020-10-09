@@ -43,7 +43,10 @@ jobs:
     - name: Update Chrome
       run: sudo apt-get update && sudo apt-get install google-chrome-stable
 
-    - name: Test
+    - name: Unit Tests
+      run: npm run test:ci
+
+    - name: E2E Tests
       run: npm run e2e -- --configuration=ci
 
     - name: Failure notifications
