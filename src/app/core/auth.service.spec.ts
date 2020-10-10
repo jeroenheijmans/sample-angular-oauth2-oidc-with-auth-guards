@@ -1,9 +1,17 @@
+import { Component } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { EventType, OAuthService } from 'angular-oauth2-oidc';
 import { MockOAuthService } from '../../testing/mocks';
 import { AuthService } from './auth.service';
+
+@Component({
+  template: ''
+})
+export class FakeComponent {}
+
+const loginUrl = '/should-login';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -12,7 +20,9 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule.withRoutes([
+        { path: 'should-login', component: FakeComponent }
+      ])],
       providers: [
         AuthService,
         {provide: OAuthService, useClass: MockOAuthService}
@@ -22,7 +32,7 @@ describe('AuthService', () => {
     service = TestBed.inject(AuthService);
     mockService = <any>TestBed.inject(OAuthService) as MockOAuthService;
     router = TestBed.inject(Router);
-    spyOn(router, 'navigateByUrl').and.stub();
+    spyOn(router, 'navigateByUrl');
   });
 
   it('should react on OAuthService events', () => {
@@ -34,11 +44,14 @@ describe('AuthService', () => {
 
     expect(mockService.loadUserProfile).toHaveBeenCalled();
     expect(mockService.hasValidAccessToken).toHaveBeenCalledTimes(2);
+  });
 
-    mockService.emulateEvent({type: 'session_terminated'});
-    mockService.emulateEvent({type: 'session_error'});
+  ['session_terminated', 'session_error'].forEach(eventType => {
+    it(`should react on OAuthService event ${eventType} and redirect to login`, () => {
+      mockService.emulateEvent({type: eventType as EventType});
 
-    expect(router.navigateByUrl).toHaveBeenCalledTimes(2);
+      expect(router.navigateByUrl).toHaveBeenCalledWith(loginUrl);
+    });
   });
 
   it('should handle storage event and update isAuthenticated status', () => {
@@ -46,9 +59,8 @@ describe('AuthService', () => {
 
     window.dispatchEvent(new StorageEvent('storage', {key: 'access_token'}));
 
-    expect(router.navigateByUrl).toHaveBeenCalled();
+    expect(router.navigateByUrl).toHaveBeenCalledWith(loginUrl);
     service.isAuthenticated$.subscribe(isAuthenticated => expect(isAuthenticated).toBe(false));
-
   });
 
   describe('runInitialLoginSequence', () => {
