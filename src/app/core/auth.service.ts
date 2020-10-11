@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
@@ -36,7 +36,6 @@ export class AuthService {
   constructor(
     private oauthService: OAuthService,
     private router: Router,
-    private zone: NgZone,
   ) {
     // Useful for debugging:
     this.oauthService.events.subscribe(event => {
@@ -60,7 +59,7 @@ export class AuthService {
       this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
 
       if (!this.oauthService.hasValidAccessToken()) {
-        this.zone.run(() => this.navigateToLoginPage());
+        this.navigateToLoginPage();
       }
     });
 
