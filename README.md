@@ -56,6 +56,28 @@ The **credentials** and ways of logging in are disclosed on the login page itsel
 You could also connect to your own IdentityServer by changing `auth-config.ts`.
 Note that your server must whitelist both `http://localhost:4200/index.html` and `http://localhost:4200/silent-refresh.html` for this to work.
 
+## Differences between Identity Server options
+
+**This repository demonstrates features using https://demo.identityserver.io (IdentityServer4)**.
+There are various other server side solutions available, each with their own intricacies.
+This codebase does not keep track itself of the specifics for each other server side solution.
+Instead, we recommend you look for specific guidance for other solutions elsewhere.
+Here are some potential starting points you could consider:
+
+- IdenitityServer4
+  - This sample itself uses IDS4
+- Auth0
+  - [github.com/jeroenheijmans/sample-auth0-angular-oauth2-oidc](https://github.com/jeroenheijmans/sample-auth0-angular-oauth2-oidc): Angular 6 and Auth0 integration
+- Keycloak
+  - No samples or tutorials yet
+- Okta
+  - No samples or tutorials yet
+- Microsoft AAD
+  - No samples or tutorials yet
+- ...
+
+Feel free to open an issue and PR if you want to add additional pieces of guidance to this section.
+
 ## Example
 
 The application is supposed to look somewhat like this:
