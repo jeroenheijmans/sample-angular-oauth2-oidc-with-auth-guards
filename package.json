@@ -8,7 +8,8 @@
     "lint": "ng lint",
     "test": "ng test",
     "test:ci": "ng test --watch=false --code-coverage",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "https":"ng serve --ssl=true"
   },
   "private": true,
   "dependencies": {
