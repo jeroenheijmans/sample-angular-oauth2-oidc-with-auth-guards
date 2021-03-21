@@ -1,5 +1,6 @@
 import { browser, logging } from 'protractor';
 
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export async function assertNoUnexpectedBrowserErrorsOnConsole() {
   const logs = await browser
     .manage()

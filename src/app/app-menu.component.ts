@@ -15,18 +15,18 @@ import { AuthService } from './core/auth.service';
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="basics/admin1">
-          <span *ngIf="!(isAuthenticated | async)">🔒</span>
+          <span *ngIf="(isAuthenticated | async) === false">🔒</span>
           Admin-1
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="extras/admin2">
-          <span *ngIf="!(isAuthenticated | async)">🔒</span>
+          <span *ngIf="(isAuthenticated | async) === false">🔒</span>
           Admin-2
         </a>
       </li>
     </ul>
-    <button class="btn btn-sm btn-default" (click)="login()" *ngIf="!(isAuthenticated | async)">Log in</button>
+    <button class="btn btn-sm btn-default" (click)="login()" *ngIf="(isAuthenticated | async) === false">Log in</button>
     <span *ngIf="isAuthenticated | async" id="email">{{email}}</span>
     <button *ngIf="isAuthenticated | async" href="#" (click)="logout()" class="btn btn-link">(log out)</button>
   </nav>`,
@@ -38,12 +38,16 @@ export class AppMenuComponent {
     this.isAuthenticated = authService.isAuthenticated$;
   }
 
-  login() { this.authService.login(); }
-  logout() { this.authService.logout(); }
+  login() {
+ this.authService.login();
+}
+  logout() {
+ this.authService.logout();
+}
 
-  get email() {
+  get email(): string {
     return this.authService.identityClaims
-    ? this.authService.identityClaims['email']
+    ? (this.authService.identityClaims as any)['email']
     : '-';
   }
 }

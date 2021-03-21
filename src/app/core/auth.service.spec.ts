@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EventType, OAuthService } from 'angular-oauth2-oidc';
@@ -25,7 +25,7 @@ describe('AuthService', () => {
     });
 
     service = TestBed.inject(AuthService);
-    mockService = <any>TestBed.inject(OAuthService) as MockOAuthService;
+    mockService = TestBed.inject(OAuthService) as any as MockOAuthService;
     router = TestBed.inject(Router);
     spyOn(router, 'navigateByUrl');
   });
@@ -59,7 +59,7 @@ describe('AuthService', () => {
   });
 
   describe('runInitialLoginSequence', () => {
-    it('should login via hash if token is valid', async (() => {
+    it('should login via hash if token is valid', waitForAsync (() => {
       spyOn(mockService, 'tryLogin');
       spyOn(mockService, 'silentRefresh');
       mockService.updateTokenValidity(true);
@@ -70,7 +70,7 @@ describe('AuthService', () => {
       });
     }));
 
-    it('should silent login via refresh and navigate to state url when required user interaction', async (() => {
+    it('should silent login via refresh and navigate to state url when required user interaction', waitForAsync (() => {
       spyOn(mockService, 'tryLogin');
       spyOn(mockService, 'silentRefresh').and.returnValue(Promise.resolve({
         type: 'silently_refreshed',
@@ -85,7 +85,7 @@ describe('AuthService', () => {
       });
     }));
 
-    it('should silent login via refresh without redirect', async (() => {
+    it('should silent login via refresh without redirect', waitForAsync (() => {
       spyOn(mockService, 'tryLogin');
       spyOn(mockService, 'silentRefresh');
 

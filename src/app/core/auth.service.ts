@@ -1,3 +1,5 @@
+/* eslint-disable brace-style */
+
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
@@ -91,7 +93,7 @@ export class AuthService {
     return this.oauthService.loadDiscoveryDocument()
 
       // For demo purposes, we pretend the previous call was very slow
-      .then(() => new Promise(resolve => setTimeout(() => resolve(), 1000)))
+      .then(() => new Promise<void>(resolve => setTimeout(() => resolve(), 1000)))
 
       // 1. HASH LOGIN:
       // Try to log in via hash fragment after redirect back
