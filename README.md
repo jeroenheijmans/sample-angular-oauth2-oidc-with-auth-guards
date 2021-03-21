@@ -6,6 +6,8 @@ This repository shows a basic Angular CLI application with [the `angular-oauth2-
 
 ## ⚠ Third-party Cookies
 
+**TLDR 👉 See [my "SPA Necromancy" blogpost for all options and workarounds known to me](https://infi.nl/nieuws/spa-necromancy/).**
+
 Browser vendors are implementing increasingly strict rules around cookies.
 This is increasingly problematic for SPA's with their Identity Server on a third-party domain.
 Most notably **problems occur if the "silent refresh via an iframe" technique is used**.
@@ -16,7 +18,7 @@ This will fire up an iframe to load an IDS page with `noprompt`, hoping cookies 
 [Safari will block cookies from being sent](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/), prompting a leading OAuth/OpenID community member to write "[SPAs are dead!?](https://leastprivilege.com/2020/03/31/spas-are-dead/)".
 In fact, if you fire up this sample repository on `localhost`, which talks to `demo.identityserver.io` (another domain!), and use it in Safari: you will notice that the silent refresh technique already fails!
 
-For further thoughts, see [issue #40](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/40).
+For reference, see [issue #40](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/40), or [my blogpost that explains workarounds and solutions](https://infi.nl/nieuws/spa-necromancy/).
 
 ## Features
 
