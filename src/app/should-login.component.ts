@@ -9,7 +9,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 export class ShouldLoginComponent {
   constructor(private authService: OAuthService) { }
 
-  public login($event) {
+  public login($event: any) {
     $event.preventDefault();
     this.authService.initLoginFlow();
   }

@@ -11,7 +11,7 @@ import { ApiService } from '../shared/api.service';
   </p>`,
 })
 export class HomeComponent implements OnInit {
-  apiResponse: Observable<string>;
+  apiResponse!: Observable<string>;
 
   constructor(private apiService: ApiService) { }
 

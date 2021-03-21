@@ -25,7 +25,7 @@ describe('AuthService', () => {
     });
 
     service = TestBed.inject(AuthService);
-    mockService = <any>TestBed.inject(OAuthService) as MockOAuthService;
+    mockService = TestBed.inject(OAuthService) as any as MockOAuthService;
     router = TestBed.inject(Router);
     spyOn(router, 'navigateByUrl');
   });

@@ -12,7 +12,7 @@ import { ApiService } from '../shared/api.service';
   </p>`,
 })
 export class Admin2Component implements OnInit {
-  apiResponse: Observable<string>;
+  apiResponse!: Observable<string>;
 
   constructor(private apiService: ApiService) { }
 

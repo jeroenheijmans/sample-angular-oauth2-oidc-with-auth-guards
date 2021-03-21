@@ -1,3 +1,6 @@
+/* eslint-disable brace-style */
+/* eslint-disable max-len */
+
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -12,7 +15,7 @@ import { AuthService } from './core/auth.service';
       <p>This is part of the app.component. Below is the router outlet.</p>
       <hr>
       <router-outlet></router-outlet>
-      <div class="authenticating-loader" *ngIf="!(isDoneLoading | async)"><div>Authenticating...</div></div>
+      <div class="authenticating-loader" *ngIf="(isDoneLoading | async) === false"><div>Authenticating...</div></div>
       <hr>
       <p>You can <a routerLink="/url-without-route">go to a url without a route</a> to see the fallback route.</p>
       <hr>
@@ -45,7 +48,7 @@ export class AppComponent {
   isDoneLoading: Observable<boolean>;
   canActivateProtectedRoutes: Observable<boolean>;
 
-  constructor (
+  constructor(
     private authService: AuthService,
   ) {
     this.isAuthenticated = this.authService.isAuthenticated$;

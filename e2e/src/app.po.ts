@@ -5,7 +5,7 @@ export class AppPage {
     return browser.get(browser.baseUrl) as Promise<unknown>;
   }
 
-  clickMenuLinkTo(route): Promise<void> {
+  clickMenuLinkTo(route: string): Promise<void> {
     return element(by.css(`nav a[href="/${route}"]`))
       .click() as Promise<void>;
   }

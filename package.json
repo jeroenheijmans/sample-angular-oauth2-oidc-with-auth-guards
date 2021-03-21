@@ -43,7 +43,17 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
-    "typescript": "~4.1.5"
+    "typescript": "~4.1.5",
+    "eslint": "^7.6.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsdoc": "30.7.6",
+    "eslint-plugin-prefer-arrow": "1.2.2",
+    "@angular-eslint/builder": "2.0.2",
+    "@angular-eslint/eslint-plugin": "2.0.2",
+    "@angular-eslint/eslint-plugin-template": "2.0.2",
+    "@angular-eslint/schematics": "2.0.2",
+    "@angular-eslint/template-parser": "2.0.2",
+    "@typescript-eslint/eslint-plugin": "4.16.1",
+    "@typescript-eslint/parser": "4.16.1"
   }
 }
