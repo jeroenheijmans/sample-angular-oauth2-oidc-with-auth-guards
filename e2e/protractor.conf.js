@@ -9,6 +9,7 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
+    acceptInsecureCerts: true,
     browserName: 'chrome'
   },
   directConnect: true,
