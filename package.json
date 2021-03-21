@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
-    "start-with-ssl": "ng serve --ssl=true --open",
+    "start": "ng serve --ssl=false --open",
+    "start-with-ssl": "ng serve --open",
     "build": "ng build",
     "lint": "ng lint",
     "test": "ng test",
