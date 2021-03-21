@@ -48,7 +48,7 @@ To use the repository:
 
 1. Clone this repository
 1. Run `npm install` to get the dependencies
-1. Run `ng serve --open` to get it running on [http://localhost:4200](http://localhost:4200)
+1. Run `npm run start` (or `start-with-ssl`) to get it running on [http://localhost:4200](http://localhost:4200) (or [https://localhost:4200](https://localhost:4200))
 
 This connects to the [demo IdentityServer4 instance](https://demo.identityserver.io/) also used in the library's examples.
 The **credentials** and ways of logging in are disclosed on the login page itself (as it's only a demo server).
