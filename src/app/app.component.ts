@@ -15,7 +15,7 @@ import { AuthService } from './core/auth.service';
       <p>This is part of the app.component. Below is the router outlet.</p>
       <hr>
       <router-outlet></router-outlet>
-      <div class="authenticating-loader" *ngIf="(isDoneLoading | async) === false"><div>Authenticating...</div></div>
+      <div class="authenticating-loader" *ngIf="(isDoneLoading$ | async) === false"><div>Authenticating...</div></div>
       <hr>
       <p>You can <a routerLink="/url-without-route">go to a url without a route</a> to see the fallback route.</p>
       <hr>
@@ -31,10 +31,10 @@ import { AuthService } from './core/auth.service';
       </p>
       <hr>
       <table class="table table-bordered table-sm table-props">
-        <tr><th>IsAuthenticated</th><td><code id="isAuthenticated">{{isAuthenticated | async}}</code></td></tr>
+        <tr><th>IsAuthenticated</th><td><code id="isAuthenticated">{{isAuthenticated$ | async}}</code></td></tr>
         <tr><th>HasValidToken</th><td><code id="hasValidToken">{{hasValidToken}}</code></td></tr>
-        <tr><th>IsDoneLoading</th><td><code id="isDoneLoading">{{isDoneLoading | async}}</code></td></tr>
-        <tr><th>CanActivateProtectedRoutes</th><td><code id="canActivateProtectedRoutes">{{canActivateProtectedRoutes | async}}</code></td></tr>
+        <tr><th>IsDoneLoading</th><td><code id="isDoneLoading">{{isDoneLoading$ | async}}</code></td></tr>
+        <tr><th>CanActivateProtectedRoutes</th><td><code id="canActivateProtectedRoutes">{{canActivateProtectedRoutes$ | async}}</code></td></tr>
         <tr><th>IdentityClaims</th><td class="pre"><code id="identityClaims">{{identityClaims | json}}</code></td></tr>
         <tr><th>RefreshToken</th><td><code class="break-all">{{refreshToken}}</code></td></tr>
         <tr><th>AccessToken</th><td><code class="break-all">{{accessToken}}</code></td></tr>
@@ -44,16 +44,16 @@ import { AuthService } from './core/auth.service';
   </div>`,
 })
 export class AppComponent {
-  isAuthenticated: Observable<boolean>;
-  isDoneLoading: Observable<boolean>;
-  canActivateProtectedRoutes: Observable<boolean>;
+  isAuthenticated$: Observable<boolean>;
+  isDoneLoading$: Observable<boolean>;
+  canActivateProtectedRoutes$: Observable<boolean>;
 
   constructor(
     private authService: AuthService,
   ) {
-    this.isAuthenticated = this.authService.isAuthenticated$;
-    this.isDoneLoading = this.authService.isDoneLoading$;
-    this.canActivateProtectedRoutes = this.authService.canActivateProtectedRoutes$;
+    this.isAuthenticated$ = this.authService.isAuthenticated$;
+    this.isDoneLoading$ = this.authService.isDoneLoading$;
+    this.canActivateProtectedRoutes$ = this.authService.canActivateProtectedRoutes$;
 
     this.authService.runInitialLoginSequence();
   }
