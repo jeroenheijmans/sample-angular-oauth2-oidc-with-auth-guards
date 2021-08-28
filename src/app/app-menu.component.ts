@@ -15,27 +15,27 @@ import { AuthService } from './core/auth.service';
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="basics/admin1">
-          <span *ngIf="(isAuthenticated | async) === false">🔒</span>
+          <span *ngIf="(isAuthenticated$ | async) === false">🔒</span>
           Admin-1
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="extras/admin2">
-          <span *ngIf="(isAuthenticated | async) === false">🔒</span>
+          <span *ngIf="(isAuthenticated$ | async) === false">🔒</span>
           Admin-2
         </a>
       </li>
     </ul>
-    <button class="btn btn-sm btn-default" (click)="login()" *ngIf="(isAuthenticated | async) === false">Log in</button>
-    <span *ngIf="isAuthenticated | async" id="email">{{email}}</span>
-    <button *ngIf="isAuthenticated | async" href="#" (click)="logout()" class="btn btn-link">(log out)</button>
+    <button class="btn btn-sm btn-default" (click)="login()" *ngIf="(isAuthenticated$ | async) === false">Log in</button>
+    <span *ngIf="isAuthenticated$ | async" id="email">{{email}}</span>
+    <button *ngIf="isAuthenticated$ | async" href="#" (click)="logout()" class="btn btn-link">(log out)</button>
   </nav>`,
 })
 export class AppMenuComponent {
-  isAuthenticated: Observable<boolean>;
+  isAuthenticated$: Observable<boolean>;
 
   constructor(private authService: AuthService) {
-    this.isAuthenticated = authService.isAuthenticated$;
+    this.isAuthenticated$ = authService.isAuthenticated$;
   }
 
   login() {
