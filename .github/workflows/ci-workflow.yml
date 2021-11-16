@@ -37,7 +37,7 @@ jobs:
       run: npm run lint
 
     - name: Build
-      run: npm run build -- --prod
+      run: npm run build -- --configuration=production
 
     # See https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/57
     - name: Update Chrome
