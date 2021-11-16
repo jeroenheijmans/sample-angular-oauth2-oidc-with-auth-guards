@@ -41,7 +41,10 @@ jobs:
 
     # See https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/57
     - name: Update Chrome
-      run: sudo apt-get update && sudo apt-get install google-chrome-stable
+      run: |
+        sudo apt-get update
+        sudo apt-get --only-upgrade install google-chrome-stable
+        google-chrome --version
 
     - name: Unit Tests
       run: npm run test:ci
