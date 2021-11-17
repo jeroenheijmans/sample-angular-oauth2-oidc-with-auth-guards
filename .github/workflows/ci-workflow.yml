@@ -49,8 +49,13 @@ jobs:
     - name: Unit Tests
       run: npm run test:ci
 
+    # Partially adapted from https://stackoverflow.com/a/63654014/419956 by @EdwardRomero licensed under cc by-sa. rev 2021.11.17.40769
     - name: E2E Tests
-      run: npm run e2e -- --configuration=ci
+      run: |
+        VERSION=`google-chrome --version | egrep -o '[0-9]+.[0-9]+' | head -1`
+        npm i webdriver-manager@latest -D # Install webdriver manager locally
+        npm i chromedriver --chromedriver_version=$VERSION -D # Install chrome driver to the version that we got from google chrome installation above
+        npm run e2e -- --configuration=ci --webdriverUpdate=false
 
     - name: Failure notifications
       if: ${{ failure() }}
