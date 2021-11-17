@@ -41,12 +41,11 @@ jobs:
 
     # See https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/57
     - name: Update Chrome
-      uses: browser-actions/setup-chrome@latest
-      with:
-          chrome-version: stable
-
-    - name: Show Chrome version
-      run: google-chrome --version
+      run: |
+        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+        sudo apt-get update
+        sudo apt-get --only-upgrade install google-chrome-stable
 
     - name: Unit Tests
       run: npm run test:ci
