@@ -54,8 +54,6 @@ export class AppComponent {
     this.isAuthenticated$ = this.authService.isAuthenticated$;
     this.isDoneLoading$ = this.authService.isDoneLoading$;
     this.canActivateProtectedRoutes$ = this.authService.canActivateProtectedRoutes$;
-
-    this.authService.runInitialLoginSequence();
   }
 
   login() { this.authService.login(); }

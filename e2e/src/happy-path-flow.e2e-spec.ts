@@ -42,6 +42,10 @@ describe('Happy Path Flow', () => {
     browser.waitForAngularEnabled(true);
   });
 
+  it('should initialize the application again', async () => {
+    await appPage.waitForAppPageLoaded();
+  });
+
   it('should have silently refreshed and show being logged in', async () => {
     expect(await appPage.getEmailText()).toBe('BobSmith@email.com');
   });
@@ -75,6 +79,10 @@ describe('Happy Path Flow', () => {
   it('should be able to return to the app', async () => {
     await ids4Page.clickReturnToAppUrl();
     browser.waitForAngularEnabled(true);
+  });
+
+  it('should initialize the application again', async () => {
+    await appPage.waitForAppPageLoaded();
   });
 
   it('should see user is not logged in', async () => {
