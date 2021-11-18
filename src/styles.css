@@ -10,6 +10,12 @@
   font-size: 5rem;
   background: #fff;
   opacity: 0.8;
+  animation: pulsate 0.4s infinite alternate linear;
+}
+
+@keyframes pulsate {
+  from { opacity: 1.0; }
+  to { opacity: 0.2; }
 }
 
 .pre {

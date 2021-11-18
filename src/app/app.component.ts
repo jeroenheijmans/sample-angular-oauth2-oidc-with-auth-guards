@@ -15,7 +15,6 @@ import { AuthService } from './core/auth.service';
       <p>This is part of the app.component. Below is the router outlet.</p>
       <hr>
       <router-outlet></router-outlet>
-      <div class="authenticating-loader" *ngIf="(isDoneLoading$ | async) === false"><div>Authenticating...</div></div>
       <hr>
       <p>You can <a routerLink="/url-without-route">go to a url without a route</a> to see the fallback route.</p>
       <hr>
