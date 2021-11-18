@@ -27,6 +27,7 @@ For reference, see [issue #40](https://github.com/jeroenheijmans/sample-angular-
 This demonstrates:
 
 - Use of **the Code+PKCE Flow** (so no JWKS validation)
+- Async but mandatory bootstrapping (via an `APP_INITIALIZER`) before the rest of the app can run
 - Modules (core, shared, and two feature modules)
 - An auth guard that forces you to login when navigating to protected routes
 - An auth guard that just prevents you from navigating to protected routes

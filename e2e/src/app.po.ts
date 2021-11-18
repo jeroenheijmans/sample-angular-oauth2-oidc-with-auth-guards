@@ -39,4 +39,13 @@ export class AppPage {
   getShownDebugValue(item: string): Promise<string> {
     return element(by.css(`#${item}`)).getText() as Promise<string>;
   }
+
+  waitForAppPageLoaded(): Promise<boolean> {
+    // A bit heavy-handed, but just waiting for the right element to
+    // be present runs into several Protractor issues which are hard
+    // to understand and even harder to solve. Given that Angular has
+    // deprecated Protractor and wants us to move to other stuff, we
+    // just let this workaround sit here for now...
+    return browser.refresh() as Promise<boolean>;
+  }
 }
