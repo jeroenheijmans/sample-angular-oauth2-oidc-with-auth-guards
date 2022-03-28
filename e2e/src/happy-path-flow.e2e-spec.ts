@@ -1,16 +1,16 @@
 import { browser } from 'protractor';
 
 import { AppPage } from './app.po';
-import { DemoIdentityServer4Page } from './demo-identityserver4.po';
+import { DemoIdentityServerPage } from './demo-identityserver.po';
 import { assertNoUnexpectedBrowserErrorsOnConsole } from './util';
 
 describe('Happy Path Flow', () => {
   let appPage: AppPage;
-  let ids4Page: DemoIdentityServer4Page;
+  let identityServerPage: DemoIdentityServerPage;
 
   beforeEach(() => {
     appPage = new AppPage();
-    ids4Page = new DemoIdentityServer4Page();
+    identityServerPage = new DemoIdentityServerPage();
   });
 
   it('should start at home', async () => {
@@ -34,11 +34,11 @@ describe('Happy Path Flow', () => {
   it('should be able to navigate to IDS4', async () => {
     await appPage.clickLoginButton();
     browser.waitForAngularEnabled(false);
-    expect(await ids4Page.isReadyForLoginInputs()).toBe(true);
+    expect(await identityServerPage.isReadyForLoginInputs()).toBe(true);
   });
 
   it('should be able to log in on IDS4', async () => {
-    await ids4Page.enterCredentials('bob', 'bob');
+    await identityServerPage.enterCredentials('bob', 'bob');
     browser.waitForAngularEnabled(true);
   });
 
@@ -59,7 +59,7 @@ describe('Happy Path Flow', () => {
 
   it('should show expected identity claims', async () => {
     const identityClaims = await appPage.getShownDebugValue('identityClaims');
-    expect(identityClaims).toContain('"iss": "https://demo.identityserver.io"');
+    expect(identityClaims).toContain('"iss": "https://demo.duendesoftware.com"');
     expect(identityClaims).toContain('"name": "Bob Smith"');
   });
 
@@ -73,11 +73,11 @@ describe('Happy Path Flow', () => {
   it('should be able to log out via IDS4', async () => {
     await appPage.clickLogoutButton();
     browser.waitForAngularEnabled(false);
-    expect(await ids4Page.isShowingLoggedOutMessage()).toBe(true);
+    expect(await identityServerPage.isShowingLoggedOutMessage()).toBe(true);
   });
 
   it('should be able to return to the app', async () => {
-    await ids4Page.clickReturnToAppUrl();
+    await identityServerPage.clickReturnToAppUrl();
     browser.waitForAngularEnabled(true);
   });
 
