@@ -16,7 +16,7 @@ This repository uses that technique currently, [starting with a `silentRefresh()
 This will fire up an iframe to load an IDS page with `noprompt`, hoping cookies get sent along to so the IDS can see if a user is logged in.
 
 [Safari will block cookies from being sent](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/), prompting a leading OAuth/OpenID community member to write "[SPAs are dead!?](https://leastprivilege.com/2020/03/31/spas-are-dead/)".
-In fact, if you fire up this sample repository on `localhost`, which talks to `demo.identityserver.io` (another domain!), and use it in Safari: you will notice that the silent refresh technique already fails!
+In fact, if you fire up this sample repository on `localhost`, which talks to `demo.duendesoftware.com` (another domain!), and use it in Safari: you will notice that the silent refresh technique already fails!
 
 For reference, see [issue #40](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/40), or [my blogpost that explains workarounds and solutions](https://infi.nl/nieuws/spa-necromancy/).
 
@@ -53,7 +53,7 @@ To use the repository:
 1. Run `npm install` to get the dependencies
 1. Run `npm run start` (or `start-with-ssl`) to get it running on [http://localhost:4200](http://localhost:4200) (or [https://localhost:4200](https://localhost:4200))
 
-This connects to the [demo IdentityServer4 instance](https://demo.identityserver.io/) also used in the library's examples.
+This connects to the [demo Duende IdentityServer instance](https://demo.duendesoftware.com/) also used in the library's examples.
 The **credentials** and ways of logging in are disclosed on the login page itself (as it's only a demo server).
 
 You could also connect to your own IdentityServer by changing `auth-config.ts`.
@@ -61,7 +61,7 @@ Note that your server must whitelist both `http://localhost:4200/index.html` and
 
 ## Differences between Identity Server options
 
-**This repository demonstrates features using https://demo.identityserver.io (IdentityServer4)**.
+**This repository demonstrates features using https://demo.duendesoftware.com (Duende IdentityServer)**.
 There are various other server side solutions available, each with their own intricacies.
 This codebase does not keep track itself of the specifics for each other server side solution.
 Instead, we recommend you look for specific guidance for other solutions elsewhere.
