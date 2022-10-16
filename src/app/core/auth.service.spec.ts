@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { fakeAsync, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EventType, OAuthEvent, OAuthService, OAuthSuccessEvent } from 'angular-oauth2-oidc';
@@ -9,7 +9,6 @@ class FakeComponent {}
 const loginUrl = '/should-login';
 
 describe('AuthService', () => {
-  let service: AuthService;
   let mockOAuthEvents: Subject<OAuthEvent>;
   let mockOAuthService: jasmine.SpyObj<OAuthService>;
   let router: Router;
@@ -43,38 +42,66 @@ describe('AuthService', () => {
         { provide: OAuthService, useValue: mockOAuthService },
       ]
     });
-
-    service = TestBed.inject(AuthService);
     router = TestBed.inject(Router);
     spyOn(router, 'navigateByUrl');
   });
 
-  it('should react on OAuthService events', () => {
-    mockOAuthEvents.next({type: 'silently_refreshed'});
-    mockOAuthEvents.next({type: 'token_received'});
+  describe('constructor', () => {
+    // This set of tests needs to .inject(AuthService) after some
+    // additional 'Arrange' phase stuff. So each test does it on
+    // its own.
 
-    expect(mockOAuthService.loadUserProfile).toHaveBeenCalled();
-    expect(mockOAuthService.hasValidAccessToken).toHaveBeenCalledTimes(2);
+    it('should initialize isAuthenticated$ based on hasValidAccessToken===false', fakeAsync(() => {
+      let latestIsAuthenticatedValue: any = null;
+      mockOAuthService.hasValidAccessToken.and.returnValue(false);
+      const service = TestBed.inject(AuthService);
+      service.isAuthenticated$.subscribe(x => latestIsAuthenticatedValue = x);
+      expect(latestIsAuthenticatedValue).toEqual(false);
+    }));
+
+    it('should initialize isAuthenticated$ based on hasValidAccessToken===true', fakeAsync(() => {
+      let latestIsAuthenticatedValue: any = null;
+      mockOAuthService.hasValidAccessToken.and.returnValue(true);
+      const service = TestBed.inject(AuthService);
+      service.isAuthenticated$.subscribe(x => latestIsAuthenticatedValue = x);
+      expect(latestIsAuthenticatedValue).toEqual(true);
+    }));
   });
 
-  ['session_terminated', 'session_error'].forEach(eventType => {
-    it(`should react on OAuthService event ${eventType} and redirect to login`, () => {
-      mockOAuthEvents.next({type: eventType as EventType});
+  describe('in general', () => {
+    let service: AuthService;
+    beforeEach(() => service = TestBed.inject(AuthService));
+
+    it('should react on OAuthService events', () => {
+      mockOAuthEvents.next({type: 'silently_refreshed'});
+      mockOAuthEvents.next({type: 'token_received'});
+
+      expect(mockOAuthService.loadUserProfile).toHaveBeenCalled();
+      expect(mockOAuthService.hasValidAccessToken).toHaveBeenCalledTimes(3); // one extra time in constructor
+    });
+
+    ['session_terminated', 'session_error'].forEach(eventType => {
+      it(`should react on OAuthService event ${eventType} and redirect to login`, () => {
+        mockOAuthEvents.next({type: eventType as EventType});
+
+        expect(router.navigateByUrl).toHaveBeenCalledWith(loginUrl);
+      });
+    });
+
+    it('should handle storage event and update isAuthenticated status', () => {
+      mockOAuthService.hasValidAccessToken.and.returnValue(false);
+
+      window.dispatchEvent(new StorageEvent('storage', {key: 'access_token'}));
 
       expect(router.navigateByUrl).toHaveBeenCalledWith(loginUrl);
+      service.isAuthenticated$.subscribe(isAuthenticated => expect(isAuthenticated).toBe(false));
     });
   });
 
-  it('should handle storage event and update isAuthenticated status', () => {
-    mockOAuthService.hasValidAccessToken.and.returnValue(false);
-
-    window.dispatchEvent(new StorageEvent('storage', {key: 'access_token'}));
-
-    expect(router.navigateByUrl).toHaveBeenCalledWith(loginUrl);
-    service.isAuthenticated$.subscribe(isAuthenticated => expect(isAuthenticated).toBe(false));
-  });
-
   describe('runInitialLoginSequence', () => {
+    let service: AuthService;
+    beforeEach(() => service = TestBed.inject(AuthService));
+
     it('should login via hash if token is valid', waitForAsync (() => {
       mockOAuthService.hasValidAccessToken.and.returnValue(true);
 

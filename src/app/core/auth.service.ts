@@ -69,6 +69,7 @@ export class AuthService {
       .subscribe(_ => {
         this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
       });
+    this.isAuthenticatedSubject$.next(this.oauthService.hasValidAccessToken());
 
     this.oauthService.events
       .pipe(filter(e => ['token_received'].includes(e.type)))
