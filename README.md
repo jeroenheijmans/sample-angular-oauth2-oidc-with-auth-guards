@@ -75,8 +75,8 @@ Here are some potential starting points you could consider:
   - No samples or tutorials yet
 - Okta
   - No samples or tutorials yet
-- Microsoft AAD
-  - No samples or tutorials yet
+- Azure AD
+  - [Community-provided steps listed in a (closed) GitHub issue](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/119)
 - ...
 
 Feel free to open an issue and PR if you want to add additional pieces of guidance to this section.
