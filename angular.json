@@ -131,7 +131,6 @@
       }
     }
   },
-  "defaultProject": "sample-auth-guards",
   "cli": {
     "analytics": false
   }
