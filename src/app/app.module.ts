@@ -25,7 +25,7 @@ import { ShouldLoginComponent } from './should-login.component';
     { path: 'extras', loadChildren: () => import('./feature-extras/extras.module').then(m => m.ExtrasModule) },
     { path: 'should-login', component: ShouldLoginComponent },
     { path: '**', component: FallbackComponent },
-], { relativeLinkResolution: 'legacy' })
+], {})
   ],
   bootstrap: [AppComponent]
 })
