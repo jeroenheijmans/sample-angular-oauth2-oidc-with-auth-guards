@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class AuthGuardWithForcedLogin implements CanActivate {
-
+export class AuthGuardWithForcedLogin {
 
   constructor(
     private authService: AuthService,
