@@ -48,9 +48,13 @@ export class AuthService {
       }
     });
 
-    // This is tricky, as it might cause race conditions (where access_token is set in another
-    // tab before everything is said and done there.
-    // TODO: Improve this setup. See: https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/2
+    // THe following cross-tab communication of fresh access tokens works usually in practice,
+    // but if you need more robust handling the community has come up with ways to extend logic
+    // in the library which may give you better mileage.
+    //
+    // See: https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/2
+    //
+    // Until then we'll stick to this:
     window.addEventListener('storage', (event) => {
       // The `key` is `null` if the event was caused by `.clear()`
       if (event.key !== 'access_token' && event.key !== null) {
