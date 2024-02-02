@@ -42,6 +42,14 @@ jobs:
     - name: Playwright - Run Tests
       run: npx playwright test
 
+    - name: Playwright - Upload Report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+
     - name: Failure notifications
       if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@v2.1.0

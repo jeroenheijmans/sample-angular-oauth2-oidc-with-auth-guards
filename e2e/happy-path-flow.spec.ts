@@ -33,7 +33,7 @@ test.describe('Happy Path Flow', () => {
 
   test('should be able to log in on IDS4', async () => {
     await page.locator('input#Input_Username').fill('bob');
-    await page.locator('input#Input_Password').fill('bob');
+    await page.locator('input#Input_Password').fill('bob-wrong-pwd'); // Temporary bad password to check GitHub Actions
     await page.locator('button[value=login]').click();
   });
 
