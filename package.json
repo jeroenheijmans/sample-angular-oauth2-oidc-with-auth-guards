@@ -8,9 +8,8 @@
     "start-with-ssl": "ng serve",
     "build": "ng build",
     "lint": "ng lint",
-    "test": "ng test",
-    "test:ci": "ng test --watch=false",
-    "e2e": "ng e2e"
+    "test": "npx playwright test",
+    "e2e": "npx playwright test"
   },
   "private": true,
   "dependencies": {

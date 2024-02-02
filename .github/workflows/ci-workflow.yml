@@ -36,22 +36,11 @@ jobs:
     - name: Lint
       run: npm run lint
 
-    - name: Build
-      run: npm run build -- --configuration=production
+    - name: Playwright - Install Browsers
+      run: npx playwright install --with-deps
 
-    # See https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/issues/57
-    - name: Update Chrome
-      run: |
-        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-        sudo apt-get update
-        sudo apt-get --only-upgrade install google-chrome-stable
-
-    - name: Unit Tests
-      run: npm run test:ci
-
-    - name: E2E Tests
-      run: npm run e2e -- --configuration=ci
+    - name: Playwright - Run Tests
+      run: npx playwright test
 
     - name: Failure notifications
       if: ${{ failure() }}
