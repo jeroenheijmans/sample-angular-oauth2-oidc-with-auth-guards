@@ -77,6 +77,9 @@ test.describe('Happy Path Flow', () => {
   });
 
   test.afterEach(async () => {
+    // This was a trick from Protractor we can consider re-enabling later. It double
+    // checks if there's no secret error messages lingering around. For now we'll
+    // merge the Protractor-replacement to have at least something.
     // await assertNoUnexpectedBrowserErrorsOnConsole();
   });
 });
