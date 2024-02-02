@@ -67,18 +67,6 @@
           },
           "defaultConfiguration": "production"
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "watch": false,
-            "codeCoverageExclude": [
-              "src/testing/*"
-            ]
-          }
-        },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
@@ -110,22 +98,6 @@
               "src/**/*.ts",
               "src/**/*.html"
             ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "sample-auth-guards:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "sample-auth-guards:serve:production"
-            },
-            "ci": {
-              "devServerTarget": "sample-auth-guards:serve:production",
-              "protractorConfig": "e2e/protractor-ci.conf.js"
-            }
           }
         }
       }
