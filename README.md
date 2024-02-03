@@ -50,7 +50,7 @@ This repository has been scaffolded with the Angular 5 CLI, then later upgraded 
 To use the repository:
 
 1. Clone this repository
-1. Run `npm install` to get the dependencies
+1. Run `npm ci` to get the exact locked dependencies
 1. Run `npm run start` (or `start-with-ssl`) to get it running on [http://localhost:4200](http://localhost:4200) (or [https://localhost:4200](https://localhost:4200))
 
 This connects to the [demo Duende IdentityServer instance](https://demo.duendesoftware.com/) also used in the library's examples.
@@ -58,6 +58,11 @@ The **credentials** and ways of logging in are disclosed on the login page itsel
 
 You could also connect to your own IdentityServer by changing `auth-config.ts`.
 Note that your server must whitelist both `http://localhost:4200/index.html` and `http://localhost:4200/silent-refresh.html` for this to work.
+
+You can run the end-to-end tests using:
+
+1. Run `npx playwright install` to grab the Playwright browsers
+2. Run `npm run test` to run the specs
 
 ## Differences between Identity Server options
 

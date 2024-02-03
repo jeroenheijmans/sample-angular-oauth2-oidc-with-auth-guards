@@ -73,14 +73,14 @@
             "ssl": true,
             "sslKey": "ssl/localhost.key",
             "sslCert": "ssl/localhost.crt",
-            "browserTarget": "sample-auth-guards:build"
+            "buildTarget": "sample-auth-guards:build"
           },
           "configurations": {
             "development": {
-              "browserTarget": "sample-auth-guards:build:development"
+              "buildTarget": "sample-auth-guards:build:development"
             },
             "production": {
-              "browserTarget": "sample-auth-guards:build:production"
+              "buildTarget": "sample-auth-guards:build:production"
             }
           },
           "defaultConfiguration": "development"
@@ -88,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sample-auth-guards:build"
+            "buildTarget": "sample-auth-guards:build"
           }
         },
         "lint": {
