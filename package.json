@@ -13,28 +13,28 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^16.1.6",
-    "@angular/common": "^16.1.6",
-    "@angular/compiler": "^16.1.6",
-    "@angular/core": "^16.1.6",
-    "@angular/forms": "^16.1.6",
-    "@angular/platform-browser": "^16.1.6",
-    "@angular/platform-browser-dynamic": "^16.1.6",
-    "@angular/router": "^16.1.6",
+    "@angular/animations": "^17.1.2",
+    "@angular/common": "^17.1.2",
+    "@angular/compiler": "^17.1.2",
+    "@angular/core": "^17.1.2",
+    "@angular/forms": "^17.1.2",
+    "@angular/platform-browser": "^17.1.2",
+    "@angular/platform-browser-dynamic": "^17.1.2",
+    "@angular/router": "^17.1.2",
     "angular-oauth2-oidc": "^15.0.1",
     "rxjs": "^7.8.1",
     "tslib": "^2.6.0",
-    "zone.js": "^0.13.1"
+    "zone.js": "^0.14.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.1.5",
+    "@angular-devkit/build-angular": "^17.1.2",
     "@angular-eslint/builder": "16.1.0",
     "@angular-eslint/eslint-plugin": "16.1.0",
     "@angular-eslint/eslint-plugin-template": "16.1.0",
     "@angular-eslint/schematics": "16.1.0",
     "@angular-eslint/template-parser": "16.1.0",
-    "@angular/cli": "^16.1.5",
-    "@angular/compiler-cli": "^16.1.6",
+    "@angular/cli": "^17.1.2",
+    "@angular/compiler-cli": "^17.1.2",
     "@playwright/test": "^1.41.2",
     "@types/node": "^20.4.4",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
@@ -42,6 +42,6 @@
     "codelyzer": "^6.0.2",
     "eslint": "^8.45.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.3.3"
   }
 }
