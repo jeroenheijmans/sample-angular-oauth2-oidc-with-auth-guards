@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { AuthConfig, OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
 import { authAppInitializerFactory } from './auth-app-initializer.factory';
@@ -14,15 +14,12 @@ export function storageFactory(): OAuthStorage {
 }
 
 @NgModule({
-  imports: [
-    HttpClientModule,
-    OAuthModule.forRoot(),
-  ],
-  providers: [
+  imports: [OAuthModule.forRoot()], providers: [
     AuthService,
     AuthGuard,
     AuthGuardWithForcedLogin,
-  ],
+    provideHttpClient(withInterceptorsFromDi()),
+  ]
 })
 export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
