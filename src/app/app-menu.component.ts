@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { AuthService } from './core/auth.service';
 
 @Component({
-  selector: 'app-menu',
-  template: `<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    selector: 'app-menu',
+    template: `<nav class="navbar navbar-expand-sm navbar-light bg-light">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="basics/home">Home</a>
@@ -30,6 +30,7 @@ import { AuthService } from './core/auth.service';
     <span *ngIf="isAuthenticated$ | async" id="email">{{email}}</span>
     <button *ngIf="isAuthenticated$ | async" href="#" (click)="logout()" class="btn btn-link">(log out)</button>
   </nav>`,
+    standalone: false
 })
 export class AppMenuComponent {
   isAuthenticated$: Observable<boolean>;

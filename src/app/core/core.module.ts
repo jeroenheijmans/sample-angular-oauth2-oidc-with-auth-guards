@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf, inject, provideAppInitializer } from '@angular/core';
 import { AuthConfig, OAuthModule, OAuthModuleConfig, OAuthStorage } from 'angular-oauth2-oidc';
 import { authAppInitializerFactory } from './auth-app-initializer.factory';
 import { authConfig } from './auth-config';
@@ -26,7 +26,10 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        { provide: APP_INITIALIZER, useFactory: authAppInitializerFactory, deps: [AuthService], multi: true },
+        provideAppInitializer(() => {
+        const initializerFn = (authAppInitializerFactory)(inject(AuthService));
+        return initializerFn();
+      }),
         { provide: AuthConfig, useValue: authConfig },
         { provide: OAuthModuleConfig, useValue: authModuleConfig },
         { provide: OAuthStorage, useFactory: storageFactory },
