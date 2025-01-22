@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 import { AuthService } from './core/auth.service';
 
 @Component({
-  selector: 'app-root',
-  template: `<div class="container-fluid">
+    selector: 'app-root',
+    template: `<div class="container-fluid">
     <app-menu></app-menu>
     <div class="container-fluid mt-2">
       <h1>Welcome</h1>
@@ -41,6 +41,7 @@ import { AuthService } from './core/auth.service';
       </table>
     </div>
   </div>`,
+    standalone: false
 })
 export class AppComponent {
   isAuthenticated$: Observable<boolean>;
