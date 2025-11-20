@@ -1,17 +1,43 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
+import { environment } from '../../environments/environment';
 
 export const authConfig: AuthConfig = {
-  issuer: 'https://demo.duendesoftware.com',
-  clientId: 'interactive.public', // The "Auth Code + PKCE" client
+  // ForgeRock issuer URL (from environment)
+  issuer: environment.auth.issuer,
+
+  // OAuth2 Client ID (from environment)
+  clientId: environment.auth.clientId,
+
+  // Authorization Code Flow (PKCE is automatic with angular-oauth2-oidc)
   responseType: 'code',
+
+  // Redirect URIs (must be whitelisted in ForgeRock client config)
   redirectUri: window.location.origin + '/',
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-  scope: 'openid profile email api', // Ask offline_access to support refresh token refreshes
-  useSilentRefresh: true, // Needed for Code Flow to suggest using iframe-based refreshes
-  silentRefreshTimeout: 5000, // For faster testing
-  timeoutFactor: 0.25, // For faster testing
+
+  // Scopes to request (from environment)
+  scope: environment.auth.scope,
+
+  // Silent refresh configuration
+  useSilentRefresh: true,
+  silentRefreshTimeout: 5000,
+  timeoutFactor: 0.75, // Refresh when 75% of token lifetime has passed
+
+  // Session management
   sessionChecksEnabled: true,
-  showDebugInformation: true, // Also requires enabling "Verbose" level in devtools
-  clearHashAfterLogin: false, // https://github.com/manfredsteyer/angular-oauth2-oidc/issues/457#issuecomment-431807040,
-  nonceStateSeparator : 'semicolon' // Real semicolon gets mangled by Duende ID Server's URI encoding
+
+  // Security settings
+  requireHttps: true, // Force HTTPS in production
+
+  // Debug settings (disable in production)
+  showDebugInformation: !environment.production,
+
+  // Compatibility settings
+  clearHashAfterLogin: false,
+
+  // ForgeRock compatibility - some ForgeRock instances may not have all standard OIDC discovery fields
+  strictDiscoveryDocumentValidation: false,
+
+  // Use 'semicolon' separator for better compatibility
+  nonceStateSeparator: 'semicolon'
 };
