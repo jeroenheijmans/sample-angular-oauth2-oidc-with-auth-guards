@@ -1,14 +1,14 @@
 /* eslint-disable brace-style */
 /* eslint-disable max-len */
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AuthService } from './core/auth.service';
 
 @Component({
-    selector: 'app-root',
-    template: `<div class="container-fluid">
+  selector: 'app-root',
+  template: `<div class="container-fluid">
     <app-menu></app-menu>
     <div class="container-fluid mt-2">
       <h1>Welcome</h1>
@@ -41,16 +41,16 @@ import { AuthService } from './core/auth.service';
       </table>
     </div>
   </div>`,
-    standalone: false
+  standalone: false
 })
 export class AppComponent {
+  private authService = inject(AuthService);
+
   isAuthenticated$: Observable<boolean>;
   isDoneLoading$: Observable<boolean>;
   canActivateProtectedRoutes$: Observable<boolean>;
 
-  constructor(
-    private authService: AuthService,
-  ) {
+  constructor() {
     this.isAuthenticated$ = this.authService.isAuthenticated$;
     this.isDoneLoading$ = this.authService.isDoneLoading$;
     this.canActivateProtectedRoutes$ = this.authService.canActivateProtectedRoutes$;
