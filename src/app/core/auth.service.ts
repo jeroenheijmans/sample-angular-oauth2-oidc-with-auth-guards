@@ -1,6 +1,6 @@
 /* eslint-disable brace-style */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
@@ -8,6 +8,9 @@ import { filter, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private oauthService = inject(OAuthService);
+  private router = inject(Router);
+
 
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
@@ -35,10 +38,7 @@ export class AuthService {
     this.router.navigateByUrl('/should-login');
   }
 
-  constructor(
-    private oauthService: OAuthService,
-    private router: Router,
-  ) {
+  constructor() {
     // Useful for debugging:
     this.oauthService.events.subscribe(event => {
       if (event instanceof OAuthErrorEvent) {

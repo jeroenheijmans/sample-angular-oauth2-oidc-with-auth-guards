@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AuthService } from './core/auth.service';
 
 @Component({
-    selector: 'app-menu',
-    template: `<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  selector: 'app-menu',
+  template: `<nav class="navbar navbar-expand-sm navbar-light bg-light">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="basics/home">Home</a>
@@ -40,25 +40,27 @@ import { AuthService } from './core/auth.service';
         <button href="#" (click)="logout()" class="btn btn-link">(log out)</button>
       }
     </nav>`,
-    standalone: false
+  standalone: false
 })
 export class AppMenuComponent {
+  private authService = inject(AuthService);
+
   isAuthenticated$: Observable<boolean>;
 
-  constructor(private authService: AuthService) {
-    this.isAuthenticated$ = authService.isAuthenticated$;
+  constructor() {
+    this.isAuthenticated$ = this.authService.isAuthenticated$;
   }
 
   login() {
- this.authService.login();
-}
+    this.authService.login();
+  }
   logout() {
- this.authService.logout();
-}
+    this.authService.logout();
+  }
 
   get email(): string {
     return this.authService.identityClaims
-    ? (this.authService.identityClaims as any)['email']
-    : '-';
+      ? (this.authService.identityClaims as any)['email']
+      : '-';
   }
 }

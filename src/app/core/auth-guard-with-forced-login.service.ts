@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
@@ -7,11 +7,8 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthGuardWithForcedLogin {
+  private authService = inject(AuthService);
 
-  constructor(
-    private authService: AuthService,
-  ) {
-  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
