@@ -10,7 +10,7 @@ export const authConfig: AuthConfig = {
   useSilentRefresh: true, // Needed for Code Flow to suggest using iframe-based refreshes
   silentRefreshTimeout: 5000, // For faster testing
   timeoutFactor: 0.25, // For faster testing
-  sessionChecksEnabled: true,
+  sessionChecksEnabled: false, // Can turn this to true but it may cause CSP issues
   showDebugInformation: true, // Also requires enabling "Verbose" level in devtools
   clearHashAfterLogin: false, // https://github.com/manfredsteyer/angular-oauth2-oidc/issues/457#issuecomment-431807040,
   nonceStateSeparator : 'semicolon' // Real semicolon gets mangled by Duende ID Server's URI encoding
