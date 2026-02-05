@@ -33,7 +33,7 @@
     "@angular-eslint/schematics": "21.0.1",
     "@angular-eslint/template-parser": "21.0.1",
     "@angular/build": "21.0.1",
-    "@angular/cli": "21.0.1",
+    "@angular/cli": "21.1.3",
     "@angular/compiler-cli": "21.0.1",
     "@playwright/test": "1.57.0",
     "@types/node": "24.10.1",
