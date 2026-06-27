@@ -14,11 +14,16 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v7
+
+    - name: Use Node.js from .nvmrc
+      uses: actions/setup-node@v6
+      with:
+        node-version-file: '.nvmrc'
 
     # Based on: https://docs.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows#example-using-the-cache-action
     - name: Cache node modules
-      uses: actions/cache@v3
+      uses: actions/cache@v6
       env:
         cache-name: cache-node-modules
       with:
@@ -43,7 +48,7 @@ jobs:
       run: npx playwright test
 
     - name: Playwright - Upload Report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       if: always()
       with:
         name: playwright-report

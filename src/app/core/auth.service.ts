@@ -1,5 +1,3 @@
-/* eslint-disable brace-style */
-
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
