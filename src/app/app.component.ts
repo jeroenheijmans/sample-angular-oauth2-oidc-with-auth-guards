@@ -1,5 +1,3 @@
-/* eslint-disable brace-style */
-/* eslint-disable max-len */
 
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
