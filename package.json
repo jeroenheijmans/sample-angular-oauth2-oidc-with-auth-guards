@@ -27,9 +27,9 @@
     "zone.js": "0.16.2"
   },
   "devDependencies": {
-    "@angular/build": "22.0.8",
+    "@angular/build": "22.1.6",
     "@angular/cli": "22.0.2",
-    "@angular/compiler-cli": "22.0.2",
+    "@angular/compiler-cli": "22.1.4",
     "@playwright/test": "1.61.0",
     "@types/node": "24.10.1",
     "angular-eslint": "22.0.0",
